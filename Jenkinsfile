@@ -1,40 +1,21 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
-        stage('Checkout') {
+        stage('Branch Based Actions') {
             steps {
-                echo ' UPDATEChecking out the code...'
-                checkout scm  // This checks out the code from your repository
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        echo "This is the dev branch!"
+                    } else if (env.BRANCH_NAME == 'release') {
+                        echo "This is the release branch!"
+                    } else if (env.BRANCH_NAME == 'main') {
+                        echo "This is the main branch!"
+                    } else {
+                        echo "This is an unrecognized branch: ${env.BRANCH_NAME}"
+                    }
+                }
             }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Building the project...'
-                // You can replace this with actual build commands for your project
-                sh 'echo "Simulating build command..."'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Testing the project...'
-                // You can replace this with actual test commands for your project
-                sh 'echo "Simulating test command..."'
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'This will always run after the pipeline'
-        }
-        success {
-            echo 'Job succeeded!'
-        }
-        failure {
-            echo 'Job failed!'
         }
     }
 }
