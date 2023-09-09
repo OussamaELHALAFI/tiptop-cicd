@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out the code...'
+                echo ' UPDATEChecking out the code...'
                 checkout scm  // This checks out the code from your repository
             }
         }
