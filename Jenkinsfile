@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
-                        echo "This is the dev branch!"
+                        echo "This is the dev branch!!"
                     } else if (env.BRANCH_NAME == 'release') {
                         echo "This is the release branch!"
                     } else if (env.BRANCH_NAME == 'main') {
