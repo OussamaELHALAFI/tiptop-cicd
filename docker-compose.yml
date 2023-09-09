@@ -13,14 +13,14 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   api:
-    build: ./f2i-project-Api
+    image: bojm3aa/f2i-project-api:latest
     ports:
       - "3001:3001"
     depends_on:
       - db
 
   frontend:
-    build: ./f2i-project-front
+    image: bojm3aa/f2i-project-front:latest
     ports:
       - "80:80"
     depends_on:
