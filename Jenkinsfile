@@ -10,7 +10,7 @@ pipeline {
                     } else if (env.BRANCH_NAME == 'release') {
                         echo "This is the release one"
                     } else if (env.BRANCH_NAME == 'main') {
-                        echo "This is the main branch!"
+                        echo "This is the main one"
                     } else {
                         echo "This is an unrecognized branch: ${env.BRANCH_NAME}"
                     }
