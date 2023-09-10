@@ -8,21 +8,21 @@ services:
       POSTGRES_DB: tiptop_db
       POSTGRES_PASSWORD: root
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   api:
-    build: ./f2i-project-Api
+    image: bojm3aa/f2i-project-api:release
     ports:
-      - "3001:3001"
+      - "3002:3001"
     depends_on:
       - db
 
   frontend:
-    build: ./f2i-project-front
+    image: bojm3aa/f2i-project-front:release
     ports:
-      - "80:80"
+      - "81:80"
     depends_on:
       - api
 

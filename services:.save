@@ -1,0 +1,5 @@
+  db: image: postgres environment: POSTGRES_USER: postgres POSTGRES_DB: tiptop_db POSTGRES_PASSWORD: root ports: - "5434:5432" # Changed the host port to avoid conflict volumes: - 
+      pgdata:/var/lib/postgresql/data
+  api: image: <your_dockerhub_username>/f2i-project-api:dev # Assuming you tag your dev images with 'dev' ports: - "3003:3001" depends_on: - db frontend: image: 
+    <your_dockerhub_username>/f2i-project-front:dev # Assuming you tag your dev images with 'dev' ports:
+      - "82:80" depends_on: - api volumes: pgdata:
