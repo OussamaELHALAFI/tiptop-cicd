@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'
+                sh 'docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'
             }
         }
 
