@@ -8,26 +8,21 @@ pipeline {
             }
         }
 
-        }    
-
-         stage('Build API Docker Image') {
+        stage('Build API Docker Image') {
             steps {
                 dir('f2i-project-api') {
-            sh 'docker build -t ousama4567/f2i-project-api:main .'
+                    sh 'docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'
+                }
+            }
         }
-    }
-}
-    
+
         stage('Build Frontend Docker Image') {
             steps {
                 dir('f2i-project-front') {
-                    sh 'docker build -t ousama4567/f2i-project-front:main .'
+                    sh 'docker build -t ousama4567/f2i-project-front:${BRANCH_NAME} .'
+                }
+            }
         }
-    }
-}
-
-
-
 
         stage('Branch Based Deployments') {
             steps {
@@ -51,5 +46,4 @@ pipeline {
             }
         }
     }
-
 }
