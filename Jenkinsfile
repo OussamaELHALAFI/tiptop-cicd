@@ -21,7 +21,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
                         // Deployment steps for 'dev' branch
-                        echo "Deploying to Development environment"
+                        echo "Deploying to Development environment!"
                         // e.g., sh 'your-deployment-command-for-dev'
                     } else if (env.BRANCH_NAME == 'release') {
                         // Deployment steps for 'release' branch
