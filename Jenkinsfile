@@ -8,11 +8,24 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        }    
+
+         stage('Build API Docker Image') {
             steps {
-                sh 'docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'
-            }
+                dir('f2i-project-api') {
+            sh 'docker build -t ousama4567/f2i-project-api:main .'
         }
+    }
+}
+    
+        stage('Build Frontend Docker Image') {
+            steps {
+                dir('f2i-project-front') {
+                    sh 'docker build -t ousama4567/f2i-project-front:main .'
+        }
+    }
+}
+
 
 
 
@@ -21,7 +34,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
                         // Deployment steps for 'dev' branch
-                        echo "Deploying to Development environment!"
+                        echo "Deploying to Development environment"
                         // e.g., sh 'your-deployment-command-for-dev'
                     } else if (env.BRANCH_NAME == 'release') {
                         // Deployment steps for 'release' branch
