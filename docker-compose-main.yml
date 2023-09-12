@@ -13,22 +13,15 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   api:
-<<<<<<< HEAD
-    image: ousama4567/f2i-project-api:latest
-=======
     image: ousama4567/f2i-project-api:main
->>>>>>> main
     ports:
       - "3001:3001"
     depends_on:
       - db
 
   frontend:
-<<<<<<< HEAD
-    image: ousama4567/f2i-project-front:latest
-=======
+   
     image: ousama4567/f2i-project-front:main
->>>>>>> main
     ports:
       - "80:80"
     depends_on:
