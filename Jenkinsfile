@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-<<<<<<< HEAD
+
         stage('Build Docker Image') {
             steps {
                 sh 'sudo docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'
@@ -16,7 +16,6 @@ pipeline {
         }
 
 
-=======
         stage('Build API Docker Image') {
             steps {
                 dir('f2i-project-Api') {
@@ -61,13 +60,13 @@ pipeline {
                 }
             }
         }
->>>>>>> main
+
 
         stage('Branch Based Deployments') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
-<<<<<<< HEAD
+
                         // Deployment steps for 'dev' branch
                         echo "Deploying to Development environment"
                         // e.g., sh 'your-deployment-command-for-dev'
@@ -79,7 +78,7 @@ pipeline {
                         // Deployment steps for 'main' branch
                         echo "Deploying to Production environment"
                         // e.g., sh 'your-deployment-command-for-prod'
-=======
+
                         echo "Deploying to Development environment"  
                         sh 'docker compose -f docker-compose-dev.yml up -d'
                         echo "API:3003"
@@ -97,7 +96,7 @@ pipeline {
                         echo "API:3001"
                         echo "front:80"
                         echo "database:5432"          
->>>>>>> main
+
                     } else {
                         echo "This is an unrecognized branch: ${BRANCH_NAME}"
                     }
@@ -105,8 +104,5 @@ pipeline {
             }
         }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 }
