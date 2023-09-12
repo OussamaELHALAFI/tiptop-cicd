@@ -40,7 +40,7 @@ pipeline {
         stage('Push API Image to Docker Hub') {
             steps {
                 dir('f2i-project-Api') {
-                    sh 'docker push ousama4567/f2i-project-api:${BRANCH_NAME}'
+                    sh 'sudo docker push ousama4567/f2i-project-api:${BRANCH_NAME}'
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
         stage('Push Frontend Image to Docker Hub') {
             steps {
                 dir('f2i-project-front') {
-                    sh 'docker push ousama4567/f2i-project-front:${BRANCH_NAME}'
+                    sh 'sudo docker push ousama4567/f2i-project-front:${BRANCH_NAME}'
                 }
             }
         }
