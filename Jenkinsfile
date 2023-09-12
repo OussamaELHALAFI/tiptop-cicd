@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        // Uncomment below stage when you want to enable testing for API
+        //uncomment below stage when you want to enable testing for API
         /*
         stage('Run API Tests') {
             steps {
