@@ -58,19 +58,19 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
                         echo "Deploying to Development environment"  
-                        sh 'docker-compose -f docker-compose-dev.yml up -d'
+                        sh 'docker compose -f docker-compose-dev.yml up -d'
                         echo "API:3003"
                         echo "front:82"
                         echo "database:5434"     
                     } else if (env.BRANCH_NAME == 'release') {
                         echo "Deploying to Staging environment"  
-                        sh 'docker-compose -f docker-compose-release.yml up -d'
+                        sh 'docker compose -f docker-compose-release.yml up -d'
                         echo "API:3002"
                         echo "front:81"
                         echo "database:5433" 
                     } else if (env.BRANCH_NAME == 'main') {
                         echo "Deploying to Production environment"              
-                        sh 'docker-compose -f docker-compose-main.yml up -d'
+                        sh 'docker compose -f docker-compose-main.yml up -d'
                         echo "API:3001"
                         echo "front:80"
                         echo "database:5432"          
