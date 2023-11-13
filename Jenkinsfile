@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Build API Docker Image for test') {
+        stage('Build API Docker Image') {
             steps {
                 dir('f2i-project-Api') {
                     sh 'docker build -t ousama4567/f2i-project-api:${BRANCH_NAME} .'

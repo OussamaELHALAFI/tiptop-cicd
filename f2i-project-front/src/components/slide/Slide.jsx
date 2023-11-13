@@ -15,9 +15,9 @@ const Slide = ({ data, slidesPerView }) => {
   return (
     <div className="slide">
       <div className="container">
-        <div className="title">
+        {/* <div className="title">
           <h1>Popular professional services</h1>
-        </div>
+        </div> */}
         <div className="caroussel">
           <Swiper
             className="swipper"
