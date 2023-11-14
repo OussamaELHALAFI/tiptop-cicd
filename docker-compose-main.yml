@@ -20,7 +20,6 @@ services:
       - db
 
   frontend:
-   
     image: ousama4567/f2i-project-front:main
     ports:
       - "80:80"
