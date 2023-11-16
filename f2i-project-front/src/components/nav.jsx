@@ -38,6 +38,10 @@ const StyledButton = styled(Button)`
   &:hover {
     color: #CCC13A;
   }
+  && {
+    font-size: 14px;
+    font-family: 'Quicksand', sans-serif;
+  }
   @media (max-width: 768px) {
     display: none;
   }
@@ -76,6 +80,14 @@ const SearchContainer = styled(Paper)`
 const SearchInput = styled(InputBase)`
   flex: 1;
   margin-left: 5px;
+`;
+
+const StyledTypography = styled(Typography)`
+&& {
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
 `;
 
 function Navbar() {
@@ -126,7 +138,7 @@ function Navbar() {
     <StyledAppBar position="static">
       <StyledToolbar>
         <LogoAndTitleContainer>
-          <Typography variant="h6">THE TIP TOP</Typography>
+          <StyledTypography variant="h6" component="h1">THE TIP TOP</StyledTypography>
           <Logo src={logo} alt="Logo" /> {/* Assurez-vous que vous avez importé votre logo */}
         </LogoAndTitleContainer>
         <NavContainer>
