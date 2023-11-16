@@ -1,23 +1,23 @@
 .slide {
     .container {
-        margin: 0; // Assurez-vous qu'il n'y a pas de marge autour de votre conteneur
-        padding: 0; // Assurez-vous qu'il n'y a pas de rembourrage autour de votre conteneur
-        width: 100%; // Assurez-vous que le conteneur occupe toute la largeur
+        margin: 0;
+        padding: 0;
+        width: 100%;
 
         .caroussel {
             margin: 0;
             padding: 0;
-            width: 100%; // Assurez-vous que le carrousel occupe toute la largeur
+            width: 100%;
 
             .swipper {
                 margin: 0;
                 padding: 0;
                 height: 100vh;
-                width: 100%; // Assurez-vous que le swiper occupe toute la largeur
-                max-height: 100vh; // Limitez la hauteur du carrousel si nécessaire
+                width: 100%;
+                max-height: 100vh;
 
                 .swiper-pagination-fraction {
-                    bottom: 10px; // Si vous voulez déplacer la pagination
+                    bottom: 10px;
                 }
 
                 .swiper-button-next,
@@ -35,8 +35,8 @@
                 .swipperslide {
                     margin: 0;
                     padding: 0;
-                    width: 100%; // Assurez-vous que ces dimensions sont celles que vous voulez
-                    height: 100vh; // Assurez-vous que chaque slide occupe toute la largeur
+                    width: 100%;
+                    height: 100vh;
 
                     img {
                         width: 100%; 
@@ -45,6 +45,18 @@
                     }
                 }
             }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container .caroussel .swipper .swipperslide {
+            height: auto; // Style spécifique pour tablette
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container .caroussel .swipper .swipperslide {
+            height: auto; // Style spécifique pour mobile
         }
     }
 }

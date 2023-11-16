@@ -10,7 +10,7 @@ import Contact from "./Pages/contact/contact";
 import { AuthProvider } from './services/authContex';
 import Auth from "./Pages/authPage/auth";
 import ProtectedRoute from './ProtectedRoute';
-
+import './fonts.css'
 
 function App() {
   const Layout = () => {
@@ -39,7 +39,7 @@ function App() {
     },
 
     {
-      path: "/home",
+      path: "/",
       
       element: <Home />,
     },
@@ -54,11 +54,11 @@ function App() {
       element: <Blog />,
     },
     {
-      path: "/signup", // Chemin vers la page d'inscription
+      path: "/signup", 
       element: <Auth />,
     },
     {
-      path: "/participer", // Chemin vers la page de connexion
+      path: "/participer", 
       element: <Participer />,
     },
   ]);
