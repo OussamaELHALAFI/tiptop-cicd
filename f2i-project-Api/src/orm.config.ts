@@ -3,8 +3,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
   username: 'postgres',
-  host: '127.0.0.1',
-  database: 'tiptop_db',
+  host: 'db',
+  database: 'tiptop_db_dev',
   password: 'root',
   port: 5432,
   synchronize: true,
