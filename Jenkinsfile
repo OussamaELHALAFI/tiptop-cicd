@@ -59,7 +59,6 @@ pipeline {
                     if (env.BRANCH_NAME == 'dev') {
                         echo "Deploying to Development environment"  
                         sh 'docker compose -f docker-compose-dev.yml down'
-                        sh 'docker rm -f $(docker ps -qa)'
                         sh 'docker compose -f docker-compose-dev.yml up -d'
                         echo "API:3003"
                         echo "front:82"
@@ -67,7 +66,6 @@ pipeline {
                     } else if (env.BRANCH_NAME == 'release') {
                         echo "Deploying to Staging environment"  
                         sh 'docker compose -f docker-compose-release.yml down'
-                        sh 'docker rm -f $(docker ps -qa)'
                         sh 'docker compose -f docker-compose-release.yml up -d'
                         echo "API:3002"
                         echo "front:81"
@@ -75,7 +73,6 @@ pipeline {
                     } else if (env.BRANCH_NAME == 'main') {
                         echo "Deploying to Production environment"         
                         sh 'docker compose -f docker-compose-main.yml down'    
-                        sh 'docker rm -f $(docker ps -qa)' 
                         sh 'docker compose -f docker-compose-main.yml up -d'
                         echo "API:3001"
                         echo "front:80"
