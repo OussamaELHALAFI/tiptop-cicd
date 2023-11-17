@@ -6,7 +6,7 @@ export const config: TypeOrmModuleOptions = {
   host: 'db',
   database: 'tiptop_db',
   password: 'root',
-  port: 5432,
+  port: 5433,
   synchronize: true,
   logging: true,
   //cache: true,
