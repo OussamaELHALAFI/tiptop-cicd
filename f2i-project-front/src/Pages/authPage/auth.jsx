@@ -13,21 +13,31 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  
-  width: 100%; // Prendre toute la largeur
 `;
 
 const FormContainer = styled.div`
 background-color: #f5f5f5;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  width: 80%; 
-  position: relative; // Pour le trait vertical
+padding: 40px;
+border-radius: 8px;
+box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+width: 80%; 
+position: relative; // Pour le trait vertical
+
+@media (max-width: 768px) {
+  flex-direction: column;
+  padding: 20px;
+  width: 90%;
+}
+
+@media (max-width: 480px) {
+  width: 100%;
+  padding: 10px;
+}
+
 `;
 
 const Form = styled.form`
@@ -37,41 +47,63 @@ const Form = styled.form`
 `;
 
 const VerticalLine = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 90%;
-  width: 2px;
-  background-color: green;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+height: 90%;
+width: 2px;
+background-color: green;
+
+@media (max-width: 768px) {
+  display: none;
+}
 `;
 
 const ValidButton = styled.button`
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #45a049;
-  }
+padding: 10px 20px;
+border: none;
+border-radius: 4px;
+background-color: #4CAF50;
+color: white;
+cursor: pointer;
+
+&:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  padding: 15px 30px;
+}
 `;
 
 const Input = styled.input`
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 200px;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+
+@media (max-width: 768px) {
+  width: calc(100% - 20px); // Account for padding
+}
+
+@media (max-width: 480px) {
+  width: calc(100% - 10px); // Account for smaller padding
+}
 `;
 
 const SocialButton = styled(Button)`
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+padding: 10px 20px;
+border-radius: 4px;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 10px;
+
+@media (max-width: 768px) {
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
 `;
 
 const SignupLogin = () => {

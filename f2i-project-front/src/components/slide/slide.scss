@@ -2,19 +2,21 @@
     .container {
         margin: 0;
         padding: 0;
-        width: 100%;
+        width: 100%; /* Ensure the container takes full width */
+        max-width: 100vw; /* Prevent the container from exceeding the viewport width */
+        overflow: hidden; /* Keep this as is if it's necessary for your layout */
 
         .caroussel {
             margin: 0;
             padding: 0;
-            width: 100%;
+            width: 100%; /* Ensure the carousel takes full width */
 
-            .swipper {
+            .swiper {
                 margin: 0;
                 padding: 0;
-                height: 100vh;
+                height: auto;
                 width: 100%;
-                max-height: 100vh;
+                max-height: 100vh; /* Ensure the swiper doesn't exceed viewport height */
 
                 .swiper-pagination-fraction {
                     bottom: 10px;
@@ -32,16 +34,17 @@
                     }
                 }
 
-                .swipperslide {
+                .swiper-slide {
                     margin: 0;
                     padding: 0;
-                    width: 100%;
-                    height: 100vh;
+                    width: 100%; /* Ensure the slide takes full width */
+                    height: auto;
 
                     img {
-                        width: 100%; 
-                        height: 100%;
+                        width: 100%; /* Change to 100% to make it relative to the container */
+                        height: auto;
                         object-fit: cover;
+                        // min-height: 100vh; /* Adjust according to your design needs */
                     }
                 }
             }
@@ -49,14 +52,16 @@
     }
 
     @media (max-width: 768px) {
-        .container .caroussel .swipper .swipperslide {
-            height: auto; // Style spécifique pour tablette
+        .container .carousel .swiper .swiper-slide {
+            height: auto; // Style spécifique pour mobile
+            min-height: 50vh;
         }
     }
 
     @media (max-width: 480px) {
-        .container .caroussel .swipper .swipperslide {
+        .container .carousel .swiper .swiper-slide {
             height: auto; // Style spécifique pour mobile
+            min-height: 30vh;
         }
     }
 }
