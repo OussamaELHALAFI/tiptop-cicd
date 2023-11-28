@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Newsletter from '../../components/news';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AcademicWarning from '../../components/academicWarning';
+import Régles from '../../components/régleDeJeux';
 
 
 const breakpoints = {
-    mobile: '768px',
-    tablet: '1024px',
-  };
+  mobile: '768px',
+  tablet: '1024px',
+};
 
 const ParticipateContainer = styled.section`
 width: 100%;
@@ -43,6 +44,8 @@ color: #000;
   margin-top: 3.75em;
   margin-bottom: 1.25em;
   font-size: 2em;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
 
   @media (max-width: ${breakpoints.tablet}) {
     margin-top: 3.125em;
@@ -61,6 +64,8 @@ line-height: 1.5;
 margin-bottom: 2.5em;
 max-width: 50em;
 text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
 
 @media (max-width: ${breakpoints.tablet}) {
     margin-bottom: 1.875em;
@@ -72,13 +77,16 @@ text-align: center;
   }
 `;
 
-const RulesLink = styled.a`
+const RulesLink = styled(Link)`
   display: block;
   color: #000;
-  text-decoration: none;
-
+  font-size: 1.5em;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+  margin-bottom: 1.5em;
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 const QuestionSection = styled.section`
@@ -125,6 +133,11 @@ const StyledTextField = styled(TextField)`
       }
   }
 `;
+const Question = styled.p`
+font-size: 1.5em;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+`;
 const ButtonStyle = styled(Button)`
 && {
     color: white;
@@ -132,6 +145,7 @@ const ButtonStyle = styled(Button)`
     background-color: #2A5738;
     border-radius: 1.25em; 
     padding: 0.625em 1.875em; 
+    font-size: 1.2em; 
 
     text-transform: none; 
     &:hover {
@@ -146,19 +160,28 @@ const ButtonStyle = styled(Button)`
 `;
 
 const Participer = () => {
-    let navigate = useNavigate(); 
+  let navigate = useNavigate();
+  const [openRules, setOpenRules] = useState(false);
+
+  const handleOpenRules = () => {
+    setOpenRules(true);
+  };
+
+  const handleCloseRules = () => {
+    setOpenRules(false);
+  };
 
   const handleContactClick = () => {
-    navigate('/contact'); 
-    window.scrollTo(0, 0); 
+    navigate('/contact');
+    window.scrollTo(0, 0);
   };
   return (
     <ParticipateContainer>
       <Content>
         <Title>TENTE TA CHANCE</Title>
         <Description>
-          Avoir un de nos tickets de caisse suffit pour participer à ce jeu concours, 
-          personne n'est perdant, vous êtes 100% gagnant. 
+          Avoir un de nos tickets de caisse suffit pour participer à ce jeu concours,
+          personne n'est perdant, vous êtes 100% gagnant.
           Il est à présent temps de rentrer le numéro de ton ticket de caisse juste en dessous.
         </Description>
         <StyledTextField
@@ -166,12 +189,12 @@ const Participer = () => {
           variant="outlined"
           placeholder="Numéro de Ticket : XXXXXXX - XXXX"
         />
-        <RulesLink href="#">Consulter Les règles du jeu</RulesLink>
+        <RulesLink onClick={handleOpenRules}>*Consulter Les règles du jeu</RulesLink>
         <ButtonStyle variant="contained" color="primary">
           Jouer
         </ButtonStyle>
         <QuestionSection>
-          <p>Avez-vous une Question ?</p>
+        <Question>Avez-vous une Question ?</Question>
           <ButtonStyle variant="outlined" color="primary" onClick={handleContactClick}>
             Contactez Nous
           </ButtonStyle>
@@ -179,6 +202,7 @@ const Participer = () => {
         <AcademicWarning />
         <Newsletter />
       </Content>
+      <Régles open={openRules} handleClose={handleCloseRules} />
     </ParticipateContainer>
   );
 };

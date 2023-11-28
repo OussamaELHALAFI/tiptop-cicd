@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AppBar, Toolbar, Button, Typography, IconButton, Menu, MenuItem, InputBase, Paper, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
 import { useAuth  } from '../services/authContex';
 import logo from '../assets/logo.png';
@@ -91,6 +91,7 @@ const StyledTypography = styled(Typography)`
 `;
 
 function Navbar() {
+  const navigate = useNavigate();
   const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState(null);
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -130,7 +131,7 @@ function Navbar() {
     accountService.logout();
     handleAuthChange(false);
     handleProfileMenuClose();
-    history.push('/home');
+    navigate('/home');
   };
 
 
@@ -162,8 +163,8 @@ function Navbar() {
                 <StyledButton color="inherit">
                   <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
                   <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
-                    <MenuItem onClick={handleProfileMenuClose}>Mon profil</MenuItem>
-                    <MenuItem onClick={handleProfileMenuClose}>Mon compte</MenuItem>
+                    <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
+                    <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
                     <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
                   </Menu>
                   </StyledButton>
