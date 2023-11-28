@@ -36,6 +36,43 @@ export class ProduitsService {
     return this.produitRepository.find();
   }
 
+  async findAlNewproductl(
+    nomDeProduit?: string,
+    startDate?: string,
+    endDate?: string,
+  ): Promise<Produit[]> {
+    const query = this.produitRepository.createQueryBuilder('produit');
+
+    if (nomDeProduit) {
+      query.andWhere('produit.nomDeProduit LIKE :nomDeProduit', {
+        nomDeProduit: `%${nomDeProduit}%`,
+      });
+    }
+
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      query.andWhere('produit.createdAt BETWEEN :start AND :end', {
+        start,
+        end,
+      });
+    }
+
+    return query.getMany();
+  }
+
+  async countNewProdcut() {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const count = await this.produitRepository
+      .createQueryBuilder('produit')
+      .where('produit.createdAt >= :sevenDaysAgo', { sevenDaysAgo })
+      .getCount();
+
+    return count;
+  }
+
   async findOne(id: number) {
     const produit = await this.produitRepository.findOneBy({ id });
     if (!produit) {

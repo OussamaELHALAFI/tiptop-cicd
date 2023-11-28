@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,6 +20,7 @@ import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthService } from './auth/auth.service';
@@ -27,6 +29,8 @@ import { JwtAuthGuard } from './guards/auth-guard';
 import { User } from './entities/user.entity';
 import { OAuth2Client } from 'google-auth-library';
 import { GoogleLogginDto } from './dto/google-login.dto';
+import { RolesGuard } from './guards/RolesGuard';
+import { Roles } from './decorators/roles.decorator';
 
 //const to get the info of the google auth
 const client = new OAuth2Client(
@@ -77,6 +81,46 @@ export class UsersController {
       image: payload.picture,
     });
     return data;
+  }
+
+  @Get('filtredUsers')
+  @ApiBearerAuth('jwt')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @ApiOkResponse({ type: User, isArray: true })
+  @ApiQuery({
+    name: 'username',
+    required: false,
+    type: String,
+    description: 'Username to search for',
+  })
+  @ApiQuery({
+    name: 'isAdmin',
+    required: false,
+    type: Boolean,
+    description: 'Filter by admin status',
+  })
+  @ApiQuery({
+    name: 'isWorker',
+    required: false,
+    type: Boolean,
+    description: 'Filter by worker status',
+  })
+  findAllWithFilter(
+    @Query('username') username?: string,
+    @Query('isAdmin') isAdmin?: boolean,
+    @Query('isWorker') isWorker?: boolean,
+  ) {
+    return this.usersService.findAllWithFilter(username, isAdmin, isWorker);
+  }
+
+  @Get('countNewUsers')
+  @ApiBearerAuth('jwt')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @ApiOkResponse({ type: User, description: 'Count all NewUsers' })
+  countNewUsers() {
+    return this.usersService.countNewUsers();
   }
 
   @Get()

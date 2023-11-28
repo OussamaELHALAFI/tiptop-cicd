@@ -32,10 +32,10 @@ export class GainController {
     return this.gainService.findOne(+id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateGainDto: UpdateGainDto) {
-  //   return this.gainService.update(+id, updateGainDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateGainDto: UpdateGainDto) {
+    return this.gainService.update(+id, updateGainDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
