@@ -1,5 +1,11 @@
 import { Ticket } from 'src/tickets/entities/ticket.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  JoinTable,
+} from 'typeorm';
 
 @Entity()
 export class Gain {
@@ -13,5 +19,6 @@ export class Gain {
   dateLimiteDeRecuperation: Date;
 
   @ManyToMany(() => Ticket, (ticket) => ticket.gains)
+  @JoinTable()
   tickets: Ticket[];
 }

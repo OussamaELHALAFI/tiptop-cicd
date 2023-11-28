@@ -150,12 +150,50 @@ export class TicketsService {
     return ticket;
   }
 
+  async findParticipant(username?: string, ticketNumber?: string) {
+    const query = this.ticketRepository
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.user', 'user')
+      .select(['ticket.numTicket', 'ticket.etat', 'user.username', 'user.id']);
+
+    if (username) {
+      query.andWhere('user.username LIKE :username', {
+        username: `%${username}%`,
+      });
+    }
+
+    if (ticketNumber) {
+      query.andWhere('ticket.numTicket LIKE :ticketNumber', {
+        ticketNumber: `%${ticketNumber}%`,
+      });
+    }
+
+    const tickets = await query.getMany();
+
+    return tickets.map((ticket) => ({
+      userId: ticket.user.id,
+      username: ticket.user.username,
+      ticketNumber: ticket.numTicket,
+      status: ticket.etat ? 'Active' : 'Inactive',
+    }));
+  }
+
+  async countParticipants() {
+    const count = await this.ticketRepository
+      .createQueryBuilder('ticket')
+      .select('COUNT(DISTINCT ticket.user)', 'participantCount')
+      .getRawOne();
+
+    return count.participantCount;
+  }
+
   async findOneByNumTicket(numTicket: string, user: User): Promise<Ticket> {
     const ticket = await this.ticketRepository
       .createQueryBuilder('ticket')
       .leftJoinAndSelect('ticket.jeuxDetails', 'jeuxDetails')
       .leftJoinAndSelect('jeuxDetails.jeux', 'jeux')
       .leftJoinAndMapMany('ticket.produits', 'ticket.produits', 'produit')
+      .leftJoinAndSelect('ticket.gains', 'gain')
       .leftJoinAndSelect('ticket.user', 'user')
       .where('ticket.numTicket = :numTicket', { numTicket })
       .andWhere('user.id = :userId', { userId: user.id })
