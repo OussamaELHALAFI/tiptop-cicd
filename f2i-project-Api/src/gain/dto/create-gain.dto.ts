@@ -1,4 +1,4 @@
-import { IsDate } from 'class-validator';
+import { IsArray, IsDate, IsNumber } from 'class-validator';
 
 export class CreateGainDto {
   @IsDate()
@@ -6,4 +6,8 @@ export class CreateGainDto {
 
   @IsDate()
   dateLimiteDeRecuperation: Date;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  ticketIds: number[];
 }

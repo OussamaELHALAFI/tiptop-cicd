@@ -8,32 +8,31 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 const Container = styled.div`
-font-family: 'Georgia', serif;
-background-color: #FFFFFF; 
-
-border-radius: 15px;
-margin-top: -20px;
-margin-left: 5%;  
-margin-right: 5%; 
+    font-family: 'Georgia', serif;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    margin-top: -20px;
+    margin-left: 5%;
+    margin-right: 5%;
 `;
 
 const Title = styled.h1`
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 50px;
-  color: #333;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #333;
 `;
 
 const SlideContent = styled.div`
-display: flex;
+    display: flex;
     flex-direction: column;
-    justify-content: center; 
-text-align: center;
-    background-color: #EEEEEE; 
+    justify-content: center;
+    text-align: center;
+    background-color: #EEEEEE;
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
-    width: 80%; 
+    width: 80%;
     height: 180px;
     margin-left: auto;
     margin-right: auto;
@@ -41,20 +40,20 @@ text-align: center;
 `;
 
 const ClientName = styled.h2`
-  font-size: 20px;
-  color: #333;
-  margin: 5px 0;
+    font-size: 20px;
+    color: #333;
+    margin: 5px 0;
 `;
 
 const Stars = styled.div`
-  color: #FFC107;
-  font-size: 24px;
+    color: #FFC107;
+    font-size: 24px;
 `;
 
 const ReviewText = styled.p`
-  font-size: 14px;
-  color: #555;
-  margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
 `;
 
 SwiperCore.use([Navigation, Pagination]);
@@ -79,6 +78,20 @@ const Slide = ({ data }) => {
                 spaceBetween={30}
                 pagination={{ clickable: true }}
                 navigation
+                breakpoints={{
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 20
+                    },
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 30
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30
+                    }
+                }}
             >
                 {data.map((card, index) => (
                     <SwiperSlide key={index}>

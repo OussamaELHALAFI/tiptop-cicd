@@ -20,6 +20,41 @@ export class UsersService {
     return this.UserRepository.find();
   }
 
+  async findAllWithFilter(
+    username?: string,
+    isAdmin?: boolean,
+    isWorker?: boolean,
+  ): Promise<User[]> {
+    const query = this.UserRepository.createQueryBuilder('user');
+
+    if (username) {
+      query.andWhere('user.username LIKE :username', {
+        username: `%${username}%`,
+      });
+    }
+
+    if (isAdmin !== undefined) {
+      query.andWhere('user.isAdmin = :isAdmin', { isAdmin });
+    }
+
+    if (isWorker !== undefined) {
+      query.andWhere('user.isWorker = :isWorker', { isWorker });
+    }
+
+    return query.getMany();
+  }
+
+  async countNewUsers() {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const count = await this.UserRepository.createQueryBuilder('user')
+      .where('user.createdAt >= :sevenDaysAgo', { sevenDaysAgo })
+      .getCount();
+
+    return count;
+  }
+
   findOneByEmail(email: string) {
     return this.UserRepository.findOneBy({ email: email });
   }

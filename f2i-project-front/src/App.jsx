@@ -10,7 +10,11 @@ import Contact from "./Pages/contact/contact";
 import { AuthProvider } from './services/authContex';
 import Auth from "./Pages/authPage/auth";
 import ProtectedRoute from './ProtectedRoute';
-
+import CookieConsentPopup from './components/CookieConsentPopup';
+import UserProfile from './components/userProfil'
+import Gain from './components/gain'
+import { CookiesProvider } from 'react-cookie';
+import './fonts.css'
 
 function App() {
   const Layout = () => {
@@ -34,38 +38,17 @@ function App() {
         { path: "signup", element: <Auth /> },
         {path: "blog", element: <Blog />},
         {path: "contact", element: <Contact />},
-        {path: "participer", element: <ProtectedRoute> <Participer /> </ProtectedRoute>}
+        {path: "participer", element: <ProtectedRoute> <Participer /> </ProtectedRoute>},
+        {path: "user", element:<ProtectedRoute>  <UserProfile /> </ProtectedRoute>},
+        {path: "gain", element:<ProtectedRoute> <Gain /> </ProtectedRoute>}
       ],
-    },
-
-    {
-      path: "/home",
-      
-      element: <Home />,
-    },
-    {
-      path: "/contact",
-      
-      element: <Contact />,
-    },
-    {
-      path: "/blog",
-      
-      element: <Blog />,
-    },
-    {
-      path: "/signup", // Chemin vers la page d'inscription
-      element: <Auth />,
-    },
-    {
-      path: "/participer", // Chemin vers la page de connexion
-      element: <Participer />,
     },
   ]);
   return (
     <>
       <div className="App">
         <AuthProvider>
+          <CookieConsentPopup />
           <RouterProvider router={router} />
         </AuthProvider>
       </div>

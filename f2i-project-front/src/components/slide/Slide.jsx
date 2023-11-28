@@ -10,18 +10,13 @@ SwiperCore.use([Virtual, Navigation, Pagination]);
 
 import "./slide.scss";
 
-const Slide = ({ data, slidesPerView }) => {
-  console.log(data);
+const Slide = ({ data }) => {
   return (
     <div className="slide">
       <div className="container">
-        {/* <div className="title">
-          <h1>Popular professional services</h1>
-        </div> */}
         <div className="caroussel">
           <Swiper
             className="swipper"
-            slidesPerView={slidesPerView}
             centeredSlides={true}
             spaceBetween={30}
             pagination={{
@@ -29,6 +24,24 @@ const Slide = ({ data, slidesPerView }) => {
             }}
             navigation={true}
             virtual
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 20
+              },
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 30
+              },
+              1024: {
+                slidesPerView: 1,
+                spaceBetween: 40
+              },
+              1440: {
+                slidesPerView: 1,
+                spaceBetween: 50
+              }
+            }}
           >
             {data.map((card) => (
               <SwiperSlide
@@ -36,13 +49,13 @@ const Slide = ({ data, slidesPerView }) => {
                 key={card.id}
                 virtualIndex={card.id}
               >
-                <img src={card.img} alt="" />
-                <div className="desc">
+                <img src={card.img} alt={card.title} />
+                {/* <div className="desc">
                   <h4>
                     <small>{card.title}</small>
                     {card.desc}
                   </h4>
-                </div>
+                </div> */}
               </SwiperSlide>
             ))}
           </Swiper>

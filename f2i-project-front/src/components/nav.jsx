@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AppBar, Toolbar, Button, Typography, IconButton, Menu, MenuItem, InputBase, Paper, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
 import { useAuth  } from '../services/authContex';
 import logo from '../assets/logo.png';
@@ -37,6 +37,10 @@ const StyledButton = styled(Button)`
   color: white;
   &:hover {
     color: #CCC13A;
+  }
+  && {
+    font-size: 14px;
+    font-family: 'Quicksand', sans-serif;
   }
   @media (max-width: 768px) {
     display: none;
@@ -78,7 +82,16 @@ const SearchInput = styled(InputBase)`
   margin-left: 5px;
 `;
 
+const StyledTypography = styled(Typography)`
+&& {
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+`;
+
 function Navbar() {
+  const navigate = useNavigate();
   const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState(null);
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -118,7 +131,7 @@ function Navbar() {
     accountService.logout();
     handleAuthChange(false);
     handleProfileMenuClose();
-    history.push('/home');
+    navigate('/home');
   };
 
 
@@ -126,7 +139,7 @@ function Navbar() {
     <StyledAppBar position="static">
       <StyledToolbar>
         <LogoAndTitleContainer>
-          <Typography variant="h6">THE TIP TOP</Typography>
+          <StyledTypography variant="h6" component="h1">THE TIP TOP</StyledTypography>
           <Logo src={logo} alt="Logo" /> {/* Assurez-vous que vous avez importé votre logo */}
         </LogoAndTitleContainer>
         <NavContainer>
@@ -150,8 +163,8 @@ function Navbar() {
                 <StyledButton color="inherit">
                   <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
                   <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
-                    <MenuItem onClick={handleProfileMenuClose}>Mon profil</MenuItem>
-                    <MenuItem onClick={handleProfileMenuClose}>Mon compte</MenuItem>
+                    <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
+                    <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
                     <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
                   </Menu>
                   </StyledButton>

@@ -24,7 +24,10 @@ padding: 0 20px;
 
 const BrandName = styled.h2`
   margin: 0;
-  font-size: 18px; // Ajustez selon les besoins
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold; 
+  font-size: 18px;
+  
 `;
 
 const Logo = styled.img`
@@ -40,8 +43,10 @@ const Nav = styled.nav`
 const NavItem = styled(Link)`
   color: white;
   text-decoration: none;
-  margin: 0 15px; // Adjust as needed
+  margin: 0 15px;
   font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold; 
 `;
 
 const SocialMediaIcons = styled.div`
@@ -62,9 +67,18 @@ const FooterBottom = styled.div`
 `;
 
 const CopyrightText = styled.p`
-  font-size: 14px;
   margin-left: 30%;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold; 
+  font-size: 14px;
 `;
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Pour un défilement fluide
+  });
+};
 
 const FooterComponent = () => (
   <FooterContainer>
@@ -74,15 +88,14 @@ const FooterComponent = () => (
         <Logo src={logo} alt="Logo" />
       </div>
       <Nav>
-        <NavItem to="/opportunites">Opportunités Professionnelles</NavItem>
-        <NavItem to="/mentions">Mentions légales</NavItem>
-        <NavItem to="/conditions">Conditions générales (CGVU)</NavItem>
-        <NavItem to="/politique">Politique de confidentialité</NavItem>
-        <NavItem to="/contact">Contact</NavItem>
+        <NavItem to="/mentions" onClick={scrollToTop}>Mentions légales</NavItem>
+        <NavItem to="/conditions" onClick={scrollToTop}>Conditions générales (CGVU)</NavItem>
+        <NavItem to="/politique" onClick={scrollToTop}>Politique de confidentialité</NavItem>
+        <NavItem to="/contact" onClick={scrollToTop}>Contact</NavItem>
       </Nav>
     </FooterTop>
     <FooterBottom>
-      <CopyrightText>© 2023 Thé Tip Top. Propulsé par Thé Tip Top</CopyrightText>
+      <CopyrightText>© 2023 Thé Tip Top. Powered by Thé Tip Top</CopyrightText>
       <SocialMediaIcons>
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
           <SocialIcon src={instagramIcon} alt="Instagram" />
