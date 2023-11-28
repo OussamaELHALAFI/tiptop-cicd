@@ -18,6 +18,36 @@ export class BlogsService {
     return this.blogRepository.save(newBlog);
   }
 
+  async findAllwithFilters(title?: string, username?: string): Promise<Blog[]> {
+    const query = this.blogRepository
+      .createQueryBuilder('blog')
+      .leftJoinAndSelect('blog.user', 'user');
+
+    if (title) {
+      query.andWhere('blog.title LIKE :title', { title: `%${title}%` });
+    }
+
+    if (username) {
+      query.andWhere('user.username LIKE :username', {
+        username: `%${username}%`,
+      });
+    }
+
+    return query.getMany();
+  }
+
+  async countNewBlog() {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+    const count = await this.blogRepository
+      .createQueryBuilder('produit')
+      .where('blog.createdAt >= :sevenDaysAgo', { sevenDaysAgo })
+      .getCount();
+
+    return count;
+  }
+
   async findAll() {
     return await this.blogRepository.find();
   }

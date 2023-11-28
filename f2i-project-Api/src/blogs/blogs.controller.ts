@@ -7,14 +7,23 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { BlogsService } from './blogs.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { JwtAuthGuard } from 'src/users/guards/auth-guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { CurrentUser } from 'src/users/decorators/user.decorator';
+import { RolesGuard } from 'src/users/guards/RolesGuard';
+import { Roles } from 'src/users/decorators/roles.decorator';
+import { Blog } from './entities/blog.entity';
 
 @Controller('blogs')
 @UseGuards(JwtAuthGuard)
@@ -26,6 +35,38 @@ export class BlogsController {
   @ApiBearerAuth('jwt')
   create(@Body() createBlogDto: CreateBlogDto, @CurrentUser() user: User) {
     return this.blogsService.create(createBlogDto, user);
+  }
+
+  @Get('countNewBlog')
+  @ApiBearerAuth('jwt')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @ApiOkResponse({ type: Blog, description: 'Count all NewProdcut' })
+  countNewProdcut() {
+    return this.blogsService.countNewBlog();
+  }
+
+  @Get('findAllwithFilters')
+  @ApiBearerAuth('jwt')
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @ApiQuery({
+    name: 'title',
+    required: false,
+    type: String,
+    description: 'title blog to search for',
+  })
+  @ApiQuery({
+    name: 'user',
+    required: false,
+    type: String,
+    description: 'user name to search with',
+  })
+  findAllwithFilters(
+    @Query('title') title?: string,
+    @Query('user') user?: string,
+  ) {
+    return this.blogsService.findAllwithFilters(title, user);
   }
 
   @Get()
