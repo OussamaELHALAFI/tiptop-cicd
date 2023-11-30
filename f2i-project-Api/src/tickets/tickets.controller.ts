@@ -30,6 +30,15 @@ import { Roles } from 'src/users/decorators/roles.decorator';
 export class TicketsController {
   constructor(private readonly ticketsService: TicketsService) {}
 
+  @Get('countParticipants')
+  @ApiBearerAuth('jwt')
+  // @UseGuards(RolesGuard)
+  // @Roles('admin')
+  @ApiOkResponse({ type: Ticket, description: 'Count all participants' })
+  countParticipants() {
+    return this.ticketsService.countParticipants();
+  }
+
   @Post()
   @ApiBearerAuth('jwt')
   create(@Body() createTicketDto: CreateTicketDto, @CurrentUser() user: User) {
@@ -38,20 +47,31 @@ export class TicketsController {
     return this.ticketsService.create(createTicketDto, user);
   }
 
+  @Post('createForStorePurchase')
+  @ApiBearerAuth('jwt')
+  // @UseGuards(RolesGuard)
+  // @Roles('admin')
+  @ApiOkResponse({ type: Ticket, description: 'creating a ticket for a store' })
+  createTicketForStorePurchase(): Promise<Ticket> {
+    return this.ticketsService.createTicketForStore();
+  }
+
+  @Get('userHistory')
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({
+    type: Ticket,
+    isArray: true,
+    description: 'Get all tickets with gains for the user',
+  })
+  getUserTicketsHistory(@CurrentUser() user: User) {
+    return this.ticketsService.getUserTicketsHistory(user);
+  }
+
   @Get()
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: Ticket, isArray: true })
   findAll(@CurrentUser() user: User) {
     return this.ticketsService.findAll(user);
-  }
-
-  @Get('countParticipants')
-  @ApiBearerAuth('jwt')
-  @UseGuards(RolesGuard)
-  @Roles('admin')
-  @ApiOkResponse({ type: Ticket, description: 'Count all participants' })
-  countParticipants() {
-    return this.ticketsService.countParticipants();
   }
 
   @Get('findParticipant')

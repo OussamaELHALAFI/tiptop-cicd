@@ -24,6 +24,47 @@ export class TicketsService {
     @InjectRepository(Gain) private gainRepository: Repository<Gain>,
   ) {}
 
+  async createTicketForStore(): Promise<Ticket> {
+    const newTicket = this.ticketRepository.create();
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let ticketNumber = '';
+
+    for (let i = 0; i < 15; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      ticketNumber += characters.charAt(randomIndex);
+    }
+    newTicket.numTicket = ticketNumber;
+    newTicket.etat = true;
+    newTicket.user = null;
+
+    const activeJeux = await this.jeuxRepository.findOne({
+      where: {
+        dateFin: MoreThan(new Date()),
+      },
+      relations: ['jeuxDetails'],
+    });
+
+    if (!activeJeux || activeJeux.jeuxDetails.length === 0) {
+      throw new BadRequestException('No active Jeux available.');
+    }
+
+    const randomIndex = Math.floor(
+      Math.random() * activeJeux.jeuxDetails.length,
+    );
+    const selectedJeuxDetails = activeJeux.jeuxDetails[randomIndex];
+    newTicket.jeuxDetails = selectedJeuxDetails;
+
+    const gain = new Gain();
+    const newDate = new Date(activeJeux.dateFin);
+    newDate.setMonth(newDate.getMonth() + 1);
+    gain.dateLimiteDeRecuperation = newDate;
+    await this.gainRepository.save(gain);
+    newTicket.gains = [gain];
+
+    return this.ticketRepository.save(newTicket);
+  }
+
   async create(createTicketDto: CreateTicketDto, user: User) {
     const { montant, produitIds } = createTicketDto;
     const newTicket = this.ticketRepository.create(createTicketDto);
@@ -113,6 +154,16 @@ export class TicketsService {
     }
 
     return this.ticketRepository.save(newTicket);
+  }
+
+  async getUserTicketsHistory(user: User): Promise<Ticket[]> {
+    return this.ticketRepository
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.gains', 'gain')
+      .leftJoinAndSelect('ticket.jeuxDetails', 'jeuxDetails')
+      .where('ticket.user = :userId', { userId: user.id })
+      .andWhere('ticket.etat = :etat', { etat: true })
+      .getMany();
   }
 
   async findAll(user: User) {
