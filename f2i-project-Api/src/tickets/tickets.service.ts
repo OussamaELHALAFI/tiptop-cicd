@@ -115,6 +115,16 @@ export class TicketsService {
     return this.ticketRepository.save(newTicket);
   }
 
+  async getUserTicketsHistory(user: User): Promise<Ticket[]> {
+    return this.ticketRepository
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.gains', 'gain')
+      .leftJoinAndSelect('ticket.jeuxDetails', 'jeuxDetails')
+      .where('ticket.user = :userId', { userId: user.id })
+      .andWhere('ticket.etat = :etat', { etat: true })
+      .getMany();
+  }
+
   async findAll(user: User) {
     try {
       const tickets = await this.ticketRepository

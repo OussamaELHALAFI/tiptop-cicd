@@ -38,6 +38,17 @@ export class TicketsController {
     return this.ticketsService.create(createTicketDto, user);
   }
 
+  @Get('userHistory')
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({
+    type: Ticket,
+    isArray: true,
+    description: 'Get all tickets with gains for the user',
+  })
+  getUserTicketsHistory(@CurrentUser() user: User) {
+    return this.ticketsService.getUserTicketsHistory(user);
+  }
+
   @Get()
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: Ticket, isArray: true })
