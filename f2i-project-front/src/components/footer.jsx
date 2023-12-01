@@ -85,7 +85,7 @@ const FooterComponent = () => (
     <FooterTop>
     <div>
         <BrandName>THÉ TIP TOP</BrandName>
-        <Logo src={logo} alt="Logo" />
+        <Logo src={logo} alt="ThéTipTop Logo" />
       </div>
       <Nav>
         <NavItem to="/mentions" onClick={scrollToTop}>Mentions légales</NavItem>
@@ -98,16 +98,16 @@ const FooterComponent = () => (
       <CopyrightText>© 2023 Thé Tip Top. Powered by Thé Tip Top</CopyrightText>
       <SocialMediaIcons>
         <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src={instagramIcon} alt="Instagram" />
+          <SocialIcon src={instagramIcon} alt="ThéTipTop Instagram" />
         </a>
         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src={facebookIcon} alt="Facebook" />
+          <SocialIcon src={facebookIcon} alt="ThéTipTop Facebook" />
         </a>
         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src={linkedInIcon} alt="LinkedIn" />
+          <SocialIcon src={linkedInIcon} alt="ThéTipTop LinkedIn" />
         </a>
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src={twitterIcon} alt="Twitter" />
+          <SocialIcon src={twitterIcon} alt="ThéTipTop Twitter" />
         </a>
       </SocialMediaIcons>
     </FooterBottom>
