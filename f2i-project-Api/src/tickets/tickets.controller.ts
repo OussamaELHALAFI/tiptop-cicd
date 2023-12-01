@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -67,6 +68,13 @@ export class TicketsController {
     return this.ticketsService.getUserTicketsHistory(user);
   }
 
+  @Get(':findnumticket')
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({ type: Ticket, description: 'Get a Ticket with its number' })
+  findByNum(@Param('findnumticket') findnumticket: string) {
+    return this.ticketsService.findByNum(findnumticket);
+  }
+
   @Get()
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: Ticket, isArray: true })
@@ -118,6 +126,15 @@ export class TicketsController {
     return this.ticketsService.findOne(+id, user);
   }
 
+  @Patch(':ticketId/assignUser/:userId')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
+  updateTicketUser(
+    @Param('ticketId') ticketId: number,
+    @Param('userId') userId: number,
+  ): Promise<Ticket> {
+    return this.ticketsService.assignUserToTicket(ticketId, userId);
+  }
   // @Delete(':id')
   // remove(@Param('id') id: string) {
   //   return this.ticketsService.remove(+id);
