@@ -1,16 +1,21 @@
 import React from "react";
-import SwiperCore, { Virtual, Navigation, Pagination } from "swiper";
+import SwiperCore, { Virtual, Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useNavigate } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-SwiperCore.use([Virtual, Navigation, Pagination]);
+SwiperCore.use([Virtual, Navigation, Pagination, Autoplay]);
 
 import "./slide.scss";
 
 const Slide = ({ data }) => {
+  const navigate = useNavigate();
+  const handleSlideClick = () => {
+    navigate("/participer");
+  };
   return (
     <div className="slide">
       <div className="container">
@@ -19,10 +24,10 @@ const Slide = ({ data }) => {
             className="swipper"
             centeredSlides={true}
             spaceBetween={30}
-            pagination={{
-              type: "fraction",
-            }}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            pagination={{ clickable: true }}
             navigation={true}
+            loop={true}
             virtual
             breakpoints={{
               320: {
@@ -48,14 +53,9 @@ const Slide = ({ data }) => {
                 className="swipperslide"
                 key={card.id}
                 virtualIndex={card.id}
+                onClick={handleSlideClick}
               >
                 <img src={card.img} alt={card.title} />
-                {/* <div className="desc">
-                  <h4>
-                    <small>{card.title}</small>
-                    {card.desc}
-                  </h4>
-                </div> */}
               </SwiperSlide>
             ))}
           </Swiper>
