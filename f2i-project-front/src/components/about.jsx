@@ -55,7 +55,7 @@ function AboutUs() {
             <h2>Qui sommes nous ?</h2>
             <AboutSection>
                 <TeaImage>
-                    <img src={thé} alt="Tea" />
+                    <img src={thé} alt="Thé vert en vrac de qualité premium vendu par Thé TipTop" />
                 </TeaImage>
                 <AboutText>
                     <p>

@@ -22,6 +22,7 @@ export class TicketsService {
     @InjectRepository(Jeux) private jeuxRepository: Repository<Jeux>,
     @InjectRepository(Produit) private produitRepository: Repository<Produit>,
     @InjectRepository(Gain) private gainRepository: Repository<Gain>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   async createTicketForStore(): Promise<Ticket> {
@@ -254,5 +255,38 @@ export class TicketsService {
       throw new NotFoundException(`Ticket with number ${numTicket} not found`);
     }
     return ticket;
+  }
+
+  async findByNum(numTicket: string): Promise<Ticket> {
+    const ticket = await this.ticketRepository.findOneBy({
+      numTicket: numTicket,
+    });
+
+    if (!ticket) {
+      throw new NotFoundException(`Ticket with number ${numTicket} not found`);
+    }
+    return ticket;
+  }
+
+  async assignUserToTicket(ticketId: number, userId: number): Promise<Ticket> {
+    const ticket = await this.ticketRepository.findOneBy({
+      id: ticketId,
+    });
+
+    if (!ticket) {
+      throw new NotFoundException('Ticket not found');
+    }
+
+    if (ticket.user) {
+      throw new BadRequestException('Ticket is already assigned to a user');
+    }
+
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    ticket.user = user;
+    return this.ticketRepository.save(ticket);
   }
 }

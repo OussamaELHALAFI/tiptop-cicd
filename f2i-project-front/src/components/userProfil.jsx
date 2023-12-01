@@ -159,7 +159,7 @@ const Profile = () => {
           {userInfo.profileImage ? (
             <Avatar
               src={userInfo.profileImage}
-              alt="Profil"
+              alt="ThéTipTop user profile"
               sx={{ width: 120, height: 120 }}
             />
           ) : (

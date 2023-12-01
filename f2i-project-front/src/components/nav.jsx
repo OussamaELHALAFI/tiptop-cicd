@@ -139,8 +139,8 @@ function Navbar() {
     <StyledAppBar position="static">
       <StyledToolbar>
         <LogoAndTitleContainer>
-          <StyledTypography variant="h6" component="h1">THE TIP TOP</StyledTypography>
-          <Logo src={logo} alt="Logo" /> {/* Assurez-vous que vous avez importé votre logo */}
+          <StyledTypography variant="h6" component="h1">THÉ TIP TOP</StyledTypography>
+          <Logo src={logo} alt="ThéTipTop Logo" />
         </LogoAndTitleContainer>
         <NavContainer>
           <SearchContainer>
