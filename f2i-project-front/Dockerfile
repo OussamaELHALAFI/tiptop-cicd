@@ -14,7 +14,7 @@ RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD ["serve","-s", "build"]
+CMD ["serve","-s","dist"]
 
 #FROM nginx:alpine
 
