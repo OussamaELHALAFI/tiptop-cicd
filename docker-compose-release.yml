@@ -5,8 +5,7 @@ services:
     image: ousama4567/f2i-project-api:release
     ports:
       - "3002:3001"
-    depends_on:
-      - db
+    
 
   frontend:
     image: ousama4567/f2i-project-front:release
