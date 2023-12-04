@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import {getUser} from '../api/auth'
 import {accountService} from './account.service'
@@ -16,6 +16,12 @@ export const AuthProvider = ({ children }) => {
   const handleAuthChange = (authStatus) => {
     setIsAuthenticated(authStatus);
   };
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
   const setToken = async (token) => {
     // Décodez le token et stockez-le
     const decoded = jwt_decode(token);

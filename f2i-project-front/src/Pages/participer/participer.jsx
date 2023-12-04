@@ -6,8 +6,10 @@ import Newsletter from '../../components/news';
 import { useNavigate, Link } from 'react-router-dom';
 import AcademicWarning from '../../components/academicWarning';
 import Régles from '../../components/régleDeJeux';
-
-
+import { useAuth } from '../../services/authContex';
+import { getTicketInfo, updateTicket } from '../../api/participer';
+import { toast } from 'react-toastify';
+ 
 const breakpoints = {
   mobile: '768px',
   tablet: '1024px',
@@ -162,13 +164,51 @@ const ButtonStyle = styled(Button)`
 const Participer = () => {
   let navigate = useNavigate();
   const [openRules, setOpenRules] = useState(false);
-
+  const [ticketNumber, setTicketNumber] = useState('');
+  const { decodedToken } = useAuth();
+  const [userId, setUserId] = useState(null);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (decodedToken && decodedToken.id) {
+      setUserId(decodedToken.id);
+    }
+  }, [decodedToken]);
+  
   const handleOpenRules = () => {
     setOpenRules(true);
   };
 
   const handleCloseRules = () => {
     setOpenRules(false);
+  };
+
+  const handleTicketNumberChange = (event) => {
+    setTicketNumber(event.target.value);
+  };
+  const handleParticipateClick = async () => {
+    if (!ticketNumber || !token) {
+      console.error('Numéro de ticket ou token manquant');
+      return;
+    }
+  
+    try {
+      const ticketInfo = await getTicketInfo(ticketNumber, token);
+  
+      if (ticketInfo && ticketInfo.id) {
+        const updatedTicket = await updateTicket(ticketInfo.id, userId, token);
+        if (updatedTicket) {
+          setTicketNumber('');
+          console.log('Ticket mis à jour avec succès', updatedTicket);
+          toast.success("Participation enregistrée. Consultez la page de gains pour voir vos résultats.");
+          
+        }
+      } else {
+        console.error('Informations du ticket non récupérées');
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la participation.");
+      console.error('Erreur lors de la participation:', error);
+    }
   };
 
   const handleContactClick = () => {
@@ -188,9 +228,11 @@ const Participer = () => {
           fullWidth
           variant="outlined"
           placeholder="Numéro de Ticket : XXXXXXX - XXXX"
+          onChange={handleTicketNumberChange}
+          value={ticketNumber} 
         />
         <RulesLink onClick={handleOpenRules}>*Consulter Les règles du jeu</RulesLink>
-        <ButtonStyle variant="contained" color="primary">
+        <ButtonStyle variant="contained" color="primary" onClick={handleParticipateClick}>
           Jouer
         </ButtonStyle>
         <QuestionSection>
