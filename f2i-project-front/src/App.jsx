@@ -13,7 +13,8 @@ import ProtectedRoute from './ProtectedRoute';
 import CookieConsentPopup from './components/CookieConsentPopup';
 import UserProfile from './components/userProfil'
 import Gain from './components/gain'
-import { CookiesProvider } from 'react-cookie';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './fonts.css'
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
         <AuthProvider>
           <CookieConsentPopup />
           <RouterProvider router={router} />
+          <ToastContainer position="bottom-right" />
         </AuthProvider>
       </div>
     </>

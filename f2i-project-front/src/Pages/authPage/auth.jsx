@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import { toast } from 'react-toastify';
+
 
 const PageContainer = styled.div`
   display: flex;
@@ -169,18 +171,20 @@ const SignupLogin = () => {
         setError('');
         try {
             const res = await logUser(loginForm);
-            if (res.ok) {
+            console.log(res);
+            if (res.status === 201) {
                 const token = await res.text();
                 accountService.saveToken(token);
                 setToken(token);
                 handleAuthChange(true);
+                toast.success("Connexion réussie.");
                 navigate('/home');
             } else {
-                setError('Email ou mot de passe incorrect.');
+                toast.error('Email ou mot de passe incorrect.');
             }
         } catch (error) {
             console.error(error);
-            setError('Une erreur est survenue lors de la connexion.');
+            toast.error('Une erreur est survenue lors de la connexion.');
         } finally {
             setIsSubmitting(false);
         }
@@ -190,7 +194,7 @@ const SignupLogin = () => {
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
         if (!signupForm.termsAccepted) {
-            setError('Vous devez accepter les Conditions Générales.');
+            toast.error('Vous devez accepter les Conditions Générales.');
             return;
         }
         setIsSubmitting(true);
@@ -198,16 +202,17 @@ const SignupLogin = () => {
         try {
             const res = await createUser(signupForm);
             if (res.status === 201) {
+                toast.success("Compte créé avec succès !");
                 setError('');
                 navigate('/signup'); 
                 setSignupForm({ username: '', email: '', password: '', termsAccepted: false });
             } else {
                 const data = await res.json();
-                setError(data.message || 'Erreur lors de la création du compte.');
+                toast.error(data.message || 'Erreur lors de la création du compte.');
             }
         } catch (error) {
             console.error(error);
-            setError('Une erreur est survenue lors de la création du compte.');
+            toast.error('Une erreur est survenue lors de la création du compte.');
         } finally {
             setIsSubmitting(false);
         }

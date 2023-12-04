@@ -7,6 +7,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
 import { useAuth  } from '../services/authContex';
 import logo from '../assets/logo.png';
+import { toast } from 'react-toastify';
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -97,7 +98,6 @@ function Navbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   // const [isAuthenticated, setIsAuthenticated] = useState(false); // Remplacez ceci par la logique d'authentification réelle
   const { isAuthenticated, handleAuthChange } = useAuth();
-  console.log(isAuthenticated);
   useEffect(() => {
     const handleResize = () => {
       const zoomLevel = window.innerWidth / window.outerWidth;
@@ -131,6 +131,7 @@ function Navbar() {
     accountService.logout();
     handleAuthChange(false);
     handleProfileMenuClose();
+    toast.success("Déconnexion réussie.");
     navigate('/home');
   };
 
