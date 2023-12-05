@@ -14,6 +14,7 @@ import CookieConsentPopup from './components/CookieConsentPopup';
 import UserProfile from './components/userProfil'
 import Gain from './components/gain'
 import About from "./Pages/aboutPage/aboutPage";
+import MontionLégales from "./Pages/MontionLégales/mentionsLégales";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './fonts.css'
@@ -41,6 +42,7 @@ function App() {
         {path: "blog", element: <Blog />},
         {path: "about", element: <About />},
         {path: "contact", element: <Contact />},
+        {path: "montionLégales", element: <MontionLégales />},
         {path: "participer", element: <ProtectedRoute> <Participer /> </ProtectedRoute>},
         {path: "user", element:<ProtectedRoute>  <UserProfile /> </ProtectedRoute>},
         {path: "gain", element:<ProtectedRoute> <Gain /> </ProtectedRoute>}

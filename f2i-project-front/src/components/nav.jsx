@@ -5,7 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
-import { useAuth  } from '../services/authContex';
+import { useAuth } from '../services/authContex';
 import logo from '../assets/logo.png';
 import { toast } from 'react-toastify';
 
@@ -140,8 +140,10 @@ function Navbar() {
     <StyledAppBar position="static">
       <StyledToolbar>
         <LogoAndTitleContainer>
-          <StyledTypography variant="h6" component="h1">THÉ TIP TOP</StyledTypography>
-          <Logo src={logo} alt="ThéTipTop Logo" />
+          <Link to="/home" >
+            <StyledTypography variant="h6" component="h1">THÉ TIP TOP</StyledTypography>
+            <Logo src={logo} alt="ThéTipTop Logo" />
+          </Link>
         </LogoAndTitleContainer>
         <NavContainer>
           <SearchContainer>
@@ -161,13 +163,13 @@ function Navbar() {
               <StyledButton color="inherit"><NavLink to="/contact" className="nav-link" activeClassName="active"> Contact </NavLink></StyledButton>
               {isAuthenticated ? (
                 <>
-                <StyledButton color="inherit">
-                  <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
-                  <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
-                    <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
-                    <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
-                    <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
-                  </Menu>
+                  <StyledButton color="inherit">
+                    <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
+                    <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
+                      <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
+                      <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
+                      <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+                    </Menu>
                   </StyledButton>
                 </>
               ) : (

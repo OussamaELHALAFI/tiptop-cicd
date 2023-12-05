@@ -83,12 +83,14 @@ const scrollToTop = () => {
 const FooterComponent = () => (
   <FooterContainer>
     <FooterTop>
-    <div>
-        <BrandName>THÉ TIP TOP</BrandName>
-        <Logo src={logo} alt="ThéTipTop Logo" />
+      <div>
+        <Link to="/home" onClick={scrollToTop}>
+          <BrandName>THÉ TIP TOP</BrandName>
+          <Logo src={logo} alt="ThéTipTop Logo" />
+        </Link>
       </div>
       <Nav>
-        <NavItem to="/mentions" onClick={scrollToTop}>Mentions légales</NavItem>
+        <NavItem to="/montionlégales" onClick={scrollToTop}>Mentions légales</NavItem>
         <NavItem to="/conditions" onClick={scrollToTop}>Conditions générales (CGVU)</NavItem>
         <NavItem to="/politique" onClick={scrollToTop}>Politique de confidentialité</NavItem>
         <NavItem to="/contact" onClick={scrollToTop}>Contact</NavItem>

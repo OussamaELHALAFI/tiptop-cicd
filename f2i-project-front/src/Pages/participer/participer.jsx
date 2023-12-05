@@ -11,8 +11,10 @@ import { getTicketInfo, updateTicket } from '../../api/participer';
 import { toast } from 'react-toastify';
  
 const breakpoints = {
-  mobile: '768px',
+  mobileS: '480px',
+  mobileL: '768px',
   tablet: '1024px',
+  large: '1440px',
 };
 
 const ParticipateContainer = styled.section`
@@ -32,12 +34,22 @@ const Content = styled.div`
   align-items: center;
   padding: 0 15px;
 
-  @media (max-width: ${breakpoints.tablet}) {
-    padding: 0 30px;
+  @media (max-width: ${breakpoints.mobileS}) {
+    padding: 0 10px; // Ajustements pour très petits écrans
   }
 
-  @media (max-width: ${breakpoints.mobile}) {
-    padding: 0 20px;
+  @media (max-width: ${breakpoints.mobileL}) {
+    padding: 0 20px; // Ajustements pour écrans mobiles plus grands
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    padding: 0 30px; // Ajustements pour tablettes
+  }
+
+  @media (min-width: ${breakpoints.large}) {
+    padding: 0 60px; // Ajustements pour grands écrans
+    max-width: 1600px; // Largeur maximale pour les grands écrans
+    height: 140vh;
   }
 `;
 
@@ -49,13 +61,16 @@ color: #000;
   font-family: 'Quicksand', sans-serif;
   font-weight: bold;
 
-  @media (max-width: ${breakpoints.tablet}) {
-    margin-top: 3.125em;
+  @media (max-width: ${breakpoints.mobileS}) {
+    font-size: 1.3em; // Taille de police plus petite pour très petits écrans
   }
 
-  @media (max-width: ${breakpoints.mobile}) {
-    margin-top: 2.5em;
-    font-size: 1.5em;
+  @media (max-width: ${breakpoints.mobileL}) {
+    font-size: 1.5em; // Taille de police ajustée pour mobiles plus grands
+  }
+
+  @media (min-width: ${breakpoints.large}) {
+    font-size: 2.5em; // Taille de police plus grande pour les grands écrans
   }
 `;
 
@@ -69,13 +84,16 @@ text-align: center;
   font-family: 'Quicksand', sans-serif;
   font-weight: bold;
 
-@media (max-width: ${breakpoints.tablet}) {
-    margin-bottom: 1.875em;
+  @media (max-width: ${breakpoints.mobileS}) {
+    font-size: 0.8em; // Taille de police plus petite pour très petits écrans
   }
 
-  @media (max-width: ${breakpoints.mobile}) {
-    margin-bottom: 1.25em;
-    font-size: 0.9em;
+  @media (max-width: ${breakpoints.mobileL}) {
+    font-size: 0.9em; // Taille de police ajustée pour mobiles plus grands
+  }
+
+  @media (min-width: ${breakpoints.large}) {
+    font-size: 1.1em; // Légèrement plus grande pour les grands écrans
   }
 `;
 
@@ -126,12 +144,12 @@ const StyledTextField = styled(TextField)`
     .MuiInputBase-input {
       padding: 1em; 
     }
-    @media (max-width: ${breakpoints.tablet}) {
-        width: 100%;
+    @media (max-width: ${breakpoints.mobileL}) {
+        width: 80%;
       }
   
       @media (max-width: ${breakpoints.mobile}) {
-        width: 100%;
+        width: 80%;
       }
   }
 `;
@@ -154,10 +172,20 @@ const ButtonStyle = styled(Button)`
       background-color: #2A5738;
       opacity: 0.9;
     }
-    @media (max-width: ${breakpoints.mobile}) {
-        width: 100%;
-        padding: 0.625em 1em;
-      }
+    @media (max-width: ${breakpoints.mobileS}) {
+      padding: 0.4em 0.8em;
+      font-size: 0.9em;
+    }
+  
+    @media (max-width: ${breakpoints.mobileL}) {
+      padding: 0.5em 1em;
+      font-size: 1em;
+    }
+  
+    @media (min-width: ${breakpoints.large}) {
+      padding: 0.75em 2em; // Plus grand pour les grands écrans
+      font-size: 1.4em;
+    }
   }
 `;
 
