@@ -6,6 +6,23 @@ const AboutContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
   text-align: justify;
+  height: auto;
+
+  @media (max-width: 600px) {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  @media (min-width: 1025px) {
+    padding: 20px;
+    max-width: 80% !important;
+    height: 100vh;
+  }
 `;
 
 const Title = styled.h2`
@@ -14,12 +31,20 @@ const Title = styled.h2`
   margin-bottom: 20px;
   font-family: 'Quicksand', sans-serif;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    font-size: 1.5em;
+  }
 `;
 
 const Paragraph = styled.p`
   line-height: 1.6;
   margin-bottom: 15px;
   font-family: 'Quicksand', sans-serif;
+
+  @media (max-width: 600px) {
+    font-size: 0.9em;
+  }
 `;
 
 const Bold = styled.span`

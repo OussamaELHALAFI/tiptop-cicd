@@ -20,7 +20,7 @@ function Contact() {
   ];
 
   return (
-    <div className="container mx-auto mt-10  flex flex-col bg-white shadow-lg rounded-lg overflow-hidden text-gray-800">
+    <div className="w-full mx-auto mt-10 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden text-gray-800">
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 p-4">
           <div className="mb-6">
@@ -114,17 +114,8 @@ function Contact() {
           </form>
         </div>
       </div>
-      {/* <div className="my-6">
-        <CounterHeure></CounterHeure>
-      </div> */}
       <Countdown />
-      {/* <div className="container mx-auto my-10 flex flex-col justify-center items-center gap-3 text-white text-center"> */}
-        {/* <button className="bg-green-500 rounded-full border-none py-2 px-6 md:px-20 text-xl md:text-2xl transition duration-300 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300">
-          Participer
-        </button>
-        <span className="block bg-orange-400 h-1 w-1/4 md:w-1/2 rounded-full mt-3"></span> */}
         <Button />
-      {/* </div> */}
       <div >
         <h2 className="text-2xl font-semibold mb-4">
           Frequently Asked Questions
@@ -145,24 +136,6 @@ function Contact() {
           Posez-la ici
         </button>
       </div>
-
-      {/* <section className="container mx-auto my-10 flex flex-col justify-center items-center gap-5 bg-gray-100 p-8 rounded-lg text-gray-800 text-center">
-        <h3 className="text-2xl font-semibold">Restez à l’écoute !</h3>
-        <span className="text-center px-4">
-          "Restez informé et profitez d'avantages exclusifs en vous inscrivant à
-          notre newsletter !"
-        </span>
-        <div className="flex flex-col md:flex-row items-center mt-4 gap-3">
-          <input
-            type="text"
-            placeholder="Entrez votre e-mail"
-            className="px-9 py-2 rounded-full focus:outline-none"
-          />
-          <button className="bg-green-500 px-4 py-2 rounded-full text-white transition duration-300 hover:bg-green-600">
-            S'abonner
-          </button>
-        </div>
-      </section> */}
       <AcademicWarning />
       <Newsletter />
     </div>
