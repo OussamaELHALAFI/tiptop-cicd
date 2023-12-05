@@ -115,7 +115,7 @@ function Contact() {
         </div>
       </div>
       <Countdown />
-        <Button />
+      <Button />
       <div >
         <h2 className="text-2xl font-semibold mb-4">
           Frequently Asked Questions
@@ -132,7 +132,8 @@ function Contact() {
         <p className="text-lg text-center px-4 mb-4 md:mb-0 md:mr-4">
           Vous n’avez pas trouvé réponse à votre question?
         </p>
-        <button className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+        <button className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           Posez-la ici
         </button>
       </div>
