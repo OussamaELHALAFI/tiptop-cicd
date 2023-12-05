@@ -164,7 +164,7 @@ const SignupLogin = () => {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         if (!loginForm.email.trim() || !loginForm.password.trim()) {
-            setError('Veuillez remplir tous les champs.');
+            toast.error('Veuillez remplir tous les champs.');
             return;
         }
         setIsSubmitting(true);
@@ -193,45 +193,73 @@ const SignupLogin = () => {
     // Soumission du formulaire d'inscription
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
+        let isValid = true;
+
+        // Validation du nom d'utilisateur
+        if (!signupForm.username.trim()) {
+            toast.error('Le nom d\'utilisateur est requis');
+            isValid = false;
+        } else if (!/[a-zA-Z]/.test(signupForm.username)) {
+            toast.error('Le nom d\'utilisateur doit contenir au moins une lettre');
+            isValid = false;
+        }
+        // Validation de l'email
+        if (!signupForm.email.trim()) {
+            toast.error('L\'email est requis');
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(signupForm.email)) {
+            toast.error('L\'email n\'est pas valide');
+            isValid = false;
+        }
+        // Validation du mot de passe
+        if (!signupForm.password) {
+            toast.error('Le mot de passe est requis');
+            isValid = false;
+        } else if (signupForm.password.length < 6) {
+            toast.error('Le mot de passe doit comporter au moins 6 caractères');
+            isValid = false;
+        }
         if (!signupForm.termsAccepted) {
             toast.error('Vous devez accepter les Conditions Générales.');
             return;
         }
         setIsSubmitting(true);
         setError('');
-        try {
-            const res = await createUser(signupForm);
-            if (res.status === 201) {
-                toast.success("Compte créé avec succès !");
-                setError('');
-                navigate('/signup'); 
-                setSignupForm({ username: '', email: '', password: '', termsAccepted: false });
-            } else {
-                const data = await res.json();
-                toast.error(data.message || 'Erreur lors de la création du compte.');
+        if (isValid) {
+            try {
+                const res = await createUser(signupForm);
+                if (res.status === 201) {
+                    toast.success("Compte créé avec succès !");
+                    setError('');
+                    navigate('/signup');
+                    setSignupForm({ username: '', email: '', password: '', termsAccepted: false });
+                } else {
+                    const data = await res.json();
+                    toast.error(data.message || 'Erreur lors de la création du compte.');
+                }
+            } catch (error) {
+                console.error(error);
+                toast.error('Une erreur est survenue lors de la création du compte.');
+            } finally {
+                setIsSubmitting(false);
             }
-        } catch (error) {
-            console.error(error);
-            toast.error('Une erreur est survenue lors de la création du compte.');
-        } finally {
-            setIsSubmitting(false);
         }
     };
 
     const handleGoogleLogin = () => {
         // Implementation of Google login logic
-      };
-    
-      const handleFacebookLogin = () => {
+    };
+
+    const handleFacebookLogin = () => {
         // Implementation of Facebook login logic
-      };
+    };
 
     return (
         <PageContainer>
             <FormContainer>
                 <Form onSubmit={handleSignupSubmit}>
                     <h3>Inscription</h3>
-                    <Input type="text" placeholder="Nom" name="username" value={signupForm.username} onChange={handleSignupChange} />
+                    <Input type="text" placeholder="Nom D'utilisateur" name="username" value={signupForm.username} onChange={handleSignupChange} />
                     <Input type="email" placeholder="Email" name="email" value={signupForm.email} onChange={handleSignupChange} />
                     <Input type="password" placeholder="Mot de passe" name="password" value={signupForm.password} onChange={handleSignupChange} />
                     <CheckboxContainer>
@@ -241,9 +269,9 @@ const SignupLogin = () => {
                                 onChange={handleCheckboxChange}
                             />
                             <Text>J'accepte les</Text>
-                            <LinkText to="/terms-of-service">Conditions Générales</LinkText>
+                            <LinkText to="/conditionGénerale">Conditions Générales</LinkText>
                         </Label>
-                        <Text>et la <LinkText to="/privacy-policy">politique de confidentialité</LinkText>.</Text>
+                        <Text>et la <LinkText to="/politiqueDeConfidentialité">politique de confidentialité</LinkText>.</Text>
                     </CheckboxContainer>
                     <ValidButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Inscription en cours...' : 'Créer un compte'}</ValidButton>
                     <SocialButton startIcon={<GoogleIcon />} onClick={() => {/* logique de connexion Google */ }} style={{ backgroundColor: '#4285F4', color: 'white' }}>
@@ -259,7 +287,7 @@ const SignupLogin = () => {
                     <Input type="email" placeholder="Email" name="email" value={loginForm.email} onChange={handleLoginChange} />
                     <Input type="password" placeholder="Mot de passe" name="password" value={loginForm.password} onChange={handleLoginChange} />
                     {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-                    <ValidButton type="submit" disabled={isSubmitting || !loginForm.email.trim() || !loginForm.password.trim()}>
+                    <ValidButton type="submit" disabled={isSubmitting}>
                         {isSubmitting ? 'Connexion en cours...' : 'Connexion'}
                     </ValidButton>
                 </Form>

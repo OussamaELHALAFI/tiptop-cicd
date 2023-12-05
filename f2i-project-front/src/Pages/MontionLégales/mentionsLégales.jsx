@@ -105,7 +105,7 @@ const LegalPage = () => {
 
             <SubHeading>Informations Légales Supplémentaires</SubHeading>
             <Paragraph><strong>Numéro d'Identification :</strong> 823 900 478 00011</Paragraph>
-            <Paragraph><strong>Contact :</strong> Eric.bou@théTipTop.com | 021 22 22 22</Paragraph>
+            <Paragraph><strong>Contact :</strong> contact@tiptop.com | 01-23-45-67-89</Paragraph>
             <Paragraph><strong>Hébergement du Site :</strong> AWS, https://dsp-archiwebo22b-ah-em-ii-oe.dspthetiptop.fr</Paragraph>
 
             <Paragraph>Les informations fournies dans les mentions légales sont sujettes à changement et peuvent être mises à jour régulièrement.</Paragraph>
