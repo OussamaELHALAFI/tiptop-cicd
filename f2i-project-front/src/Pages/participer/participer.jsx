@@ -9,7 +9,7 @@ import Régles from '../../components/régleDeJeux';
 import { useAuth } from '../../services/authContex';
 import { getTicketInfo, updateTicket } from '../../api/participer';
 import { toast } from 'react-toastify';
- 
+
 const breakpoints = {
   mobileS: '480px',
   mobileL: '768px',
@@ -201,7 +201,7 @@ const Participer = () => {
       setUserId(decodedToken.id);
     }
   }, [decodedToken]);
-  
+
   const handleOpenRules = () => {
     setOpenRules(true);
   };
@@ -215,26 +215,30 @@ const Participer = () => {
   };
   const handleParticipateClick = async () => {
     if (!ticketNumber || !token) {
-      console.error('Numéro de ticket ou token manquant');
+      toast.error('Numéro de ticket manquant');
       return;
     }
-  
+
     try {
       const ticketInfo = await getTicketInfo(ticketNumber, token);
-  
+
       if (ticketInfo && ticketInfo.id) {
-        const updatedTicket = await updateTicket(ticketInfo.id, userId, token);
-        if (updatedTicket) {
-          setTicketNumber('');
-          console.log('Ticket mis à jour avec succès', updatedTicket);
-          toast.success("Participation enregistrée. Consultez la page de gains pour voir vos résultats.");
-          
+        if (!ticketInfo.participer) {
+          const updatedTicket = await updateTicket(ticketInfo.id, userId, token);
+          if (updatedTicket) {
+            setTicketNumber('');
+            console.log('Ticket mis à jour avec succès', updatedTicket);
+            toast.success("Participation enregistrée. Consultez la page de gains pour voir votre gain.");
+
+          }
+        } else {
+          toast.error('Ticket a déja  participer a un jeux');
         }
       } else {
-        console.error('Informations du ticket non récupérées');
+        toast.error('Ticket invalide');
       }
     } catch (error) {
-      toast.error("Erreur lors de la participation.");
+      toast.error("Erreur lors de la participation vérifies les numéro de votre ticket.");
       console.error('Erreur lors de la participation:', error);
     }
   };
@@ -257,14 +261,14 @@ const Participer = () => {
           variant="outlined"
           placeholder="Numéro de Ticket : XXXXXXX - XXXX"
           onChange={handleTicketNumberChange}
-          value={ticketNumber} 
+          value={ticketNumber}
         />
         <RulesLink onClick={handleOpenRules}>*Consulter Les règles du jeu</RulesLink>
         <ButtonStyle variant="contained" color="primary" onClick={handleParticipateClick}>
           Jouer
         </ButtonStyle>
         <QuestionSection>
-        <Question>Avez-vous une Question ?</Question>
+          <Question>Avez-vous une Question ?</Question>
           <ButtonStyle variant="outlined" color="primary" onClick={handleContactClick}>
             Contactez Nous
           </ButtonStyle>

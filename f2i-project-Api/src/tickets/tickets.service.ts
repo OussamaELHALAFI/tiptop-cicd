@@ -287,6 +287,7 @@ export class TicketsService {
     }
 
     ticket.user = user;
+    ticket.participer = true;
     return this.ticketRepository.save(ticket);
   }
 }

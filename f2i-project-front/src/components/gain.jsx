@@ -65,13 +65,24 @@ const ClaimButton = styled.button`
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+  font-family: 'Quicksand', sans-serif; 
+    font-weight: bold;
 
   @media (max-width: 480px) { // mobiles
     padding: 8px 16px;
     font-size: 14px;
   }
 `;
-
+const StyledSpan = styled.span`
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+`;
+const Title = styled.h2`
+  font-size: 18px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+`;
 
 const WinningsPage = () => {
     const [winnings, setWinnings] = useState([]);
@@ -88,7 +99,8 @@ const WinningsPage = () => {
                 valeurPrix: win.jeuxDetails.valeurPrix,
                 claimed: win.gains.some(gain => gain.dateDeRecuperation !== null),
                 gainId: win.gains[0].id,
-                dateDeRecuperation: win.gains[0].dateDeRecuperation
+                dateDeRecuperation: win.gains[0].dateDeRecuperation,
+                dateLimitedeRecuperation: win.gains[0].dateLimiteDeRecuperation
               }));
               formattedWins = formattedWins.sort((a, b) => {
                 if (!a.claimed && !b.claimed) {
@@ -132,13 +144,15 @@ console.log(winnings)
 
   return (
     <PageContainer>
-      <h1>Mes Gains</h1>
+      <Title>Mes Gains</Title>
       <WinningsList>
         {winnings.map(winning => (
           <WinningItem key={winning.gainId}>
-            <span>{winning.typePrix} - {winning.valeurPrix}€</span>
+            {!winning.claimed ?(
+            <StyledSpan>{winning.typePrix} - {winning.valeurPrix}€ - {` (A recupérer avant ${new Date(winning.dateLimitedeRecuperation).toLocaleDateString()})`}</StyledSpan>
+            ):(<StyledSpan>{winning.typePrix} - {winning.valeurPrix}€</StyledSpan>)}
             {winning.claimed ? (
-              <span>Réclamé  {` le ${new Date(winning.dateDeRecuperation).toLocaleDateString()}`}</span>
+              <StyledSpan>Réclamé  {` le ${new Date(winning.dateDeRecuperation).toLocaleDateString()}`}</StyledSpan>
             ) : (
               <ClaimButton onClick={() => claimWinning(winning.gainId)}>
                 Réclamer
