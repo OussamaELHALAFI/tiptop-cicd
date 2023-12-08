@@ -15,8 +15,10 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { JwtAuthGuard } from 'src/users/guards/auth-guard';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOkResponse,
   ApiQuery,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
@@ -24,12 +26,25 @@ import { CurrentUser } from 'src/users/decorators/user.decorator';
 import { RolesGuard } from 'src/users/guards/RolesGuard';
 import { Roles } from 'src/users/decorators/roles.decorator';
 import { Blog } from './entities/blog.entity';
+import { MailchimpService } from './mailchimp/mailchimp.service';
+import { SubscribeDto } from './mailchimp/dto/create-mailchimp.dto';
 
 @Controller('blogs')
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @ApiTags('Blogs')
 export class BlogsController {
-  constructor(private readonly blogsService: BlogsService) {}
+  constructor(
+    private readonly blogsService: BlogsService,
+    private mailchimpService: MailchimpService,
+  ) {}
+
+  @Post('addSubscriber')
+  @ApiBody({ type: SubscribeDto })
+  @ApiResponse({ status: 200, description: 'Subscription successful.' })
+  @ApiResponse({ status: 400, description: 'Invalid email provided.' })
+  subscribe(@Body() subscribeDto: SubscribeDto) {
+    return this.mailchimpService.addSubscriber(subscribeDto.email);
+  }
 
   @Post()
   @ApiBearerAuth('jwt')

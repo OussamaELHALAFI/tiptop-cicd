@@ -13,7 +13,12 @@ import ProtectedRoute from './ProtectedRoute';
 import CookieConsentPopup from './components/CookieConsentPopup';
 import UserProfile from './components/userProfil'
 import Gain from './components/gain'
-import { CookiesProvider } from 'react-cookie';
+import About from "./Pages/aboutPage/aboutPage";
+import MontionLégales from "./Pages/MontionLégales/mentionsLégales";
+import ConditionGénérale from "./Pages/conditionGénérale/conditionsGénérales";
+import PolitiqueDeConfid from "./Pages/politiquesDeConfidentialité/politiquesDeConfidentialité";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './fonts.css'
 
 function App() {
@@ -37,7 +42,11 @@ function App() {
         { path: "home", element: <Home /> },
         { path: "signup", element: <Auth /> },
         {path: "blog", element: <Blog />},
+        {path: "about", element: <About />},
         {path: "contact", element: <Contact />},
+        {path: "montionLégales", element: <MontionLégales />},
+        {path: "conditionGénerale", element: <ConditionGénérale />},
+        {path: "politiqueDeConfidentialité", element: <PolitiqueDeConfid />},
         {path: "participer", element: <ProtectedRoute> <Participer /> </ProtectedRoute>},
         {path: "user", element:<ProtectedRoute>  <UserProfile /> </ProtectedRoute>},
         {path: "gain", element:<ProtectedRoute> <Gain /> </ProtectedRoute>}
@@ -50,6 +59,7 @@ function App() {
         <AuthProvider>
           <CookieConsentPopup />
           <RouterProvider router={router} />
+          <ToastContainer position="bottom-right" />
         </AuthProvider>
       </div>
     </>

@@ -14,6 +14,8 @@ const Container = styled.div`
     margin-top: -20px;
     margin-left: 5%;
     margin-right: 5%;
+    width: 90vw;
+    height: auto;
 `;
 
 const Title = styled.h1`
@@ -21,6 +23,8 @@ const Title = styled.h1`
     text-align: center;
     margin-bottom: 50px;
     color: #333;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
 `;
 
 const SlideContent = styled.div`
@@ -32,8 +36,8 @@ const SlideContent = styled.div`
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
-    width: 80%;
-    height: 180px;
+    width: auto;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -43,6 +47,8 @@ const ClientName = styled.h2`
     font-size: 20px;
     color: #333;
     margin: 5px 0;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
 `;
 
 const Stars = styled.div`
@@ -54,6 +60,8 @@ const ReviewText = styled.p`
     font-size: 14px;
     color: #555;
     margin: 5px 0;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
 `;
 
 SwiperCore.use([Navigation, Pagination]);
@@ -89,6 +97,10 @@ const Slide = ({ data }) => {
                     },
                     1024: {
                         slidesPerView: 3,
+                        spaceBetween: 30
+                    },
+                    2000: {
+                        slidesPerView: 4,
                         spaceBetween: 30
                     }
                 }}
