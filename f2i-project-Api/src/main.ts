@@ -15,17 +15,17 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
   app.setGlobalPrefix('api');
-  // app.useGlobalPipes(new IsAdminPipe());
+   app.useGlobalPipes(new IsAdminPipe());
   dotenv.config();
-  // app.use(
-  //   ['/', '/json'],
-  //   basicAuth({
-  //     challenge: true,
-  //     users: {
-  //       [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
-  //     },
-  //   }),
-  // );
+   app.use(
+     ['/', '/json'],
+     basicAuth({
+       challenge: true,
+       users: {
+         [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
+       },
+     }),
+   );
   const config = new DocumentBuilder()
     .setTitle('TipTop Api')
     .setDescription('The TipTop API description')
