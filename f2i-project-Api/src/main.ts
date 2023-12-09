@@ -9,7 +9,7 @@ import { IsAdminPipe } from './users/pipe/is-admin.pipe';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-  origin: 'https://dsp-archiwebo22b-ah-em-ii-oe.dspthetiptop.fr/',
+  origin: 'https://dsp-archiwebo22b-ah-em-ii-oe.dspthetiptop.fr',
     credentials: true,
     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
