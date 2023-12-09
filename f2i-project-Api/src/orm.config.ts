@@ -3,9 +3,9 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
   username: 'postgres',
-  host: 'db',
+  host: 'database-1.cavgzh4b8fdu.eu-north-1.rds.amazonaws.com',
   database: 'tiptop_db',
-  password: 'root',
+  password: 'postgres',
   port: 5432,
   synchronize: true,
   logging: true,

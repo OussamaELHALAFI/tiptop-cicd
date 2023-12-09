@@ -19,7 +19,8 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const { username, email, password } = createUserDto;
+    const { username, email, password, isAdmin, isWorker, image } =
+      createUserDto;
     //console.log(createUserDto);
 
     const exists = await this.userService.findOneByEmail(email);
@@ -36,6 +37,9 @@ export class AuthService {
     user.username = username;
     user.password = hash;
     user.email = email;
+    user.isAdmin = isAdmin;
+    user.isWorker = isWorker;
+    user.image = image;
 
     return this.userService.create(user);
   }
@@ -47,10 +51,10 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('User ont found');
     }
-    const { id, isAdmin } = user;
+    const { id, isAdmin, isWorker } = user;
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
-      const jwtPayload = { id, isAdmin };
+      const jwtPayload = { id, isAdmin, isWorker };
       const jwtToken = await this.jwt.signAsync(jwtPayload, {
         expiresIn: '1d',
         algorithm: 'HS512',

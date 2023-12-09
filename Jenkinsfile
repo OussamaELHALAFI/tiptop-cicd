@@ -26,7 +26,7 @@ pipeline {
 
         //uncomment below stage when you want to enable testing for API
 	    /*
-        stage(' Run API Tests') {
+        stage('Run API Tests') {
             steps {
                 dir('f2i-project-Api') {
                     sh 'npm run test'

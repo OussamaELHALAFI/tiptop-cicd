@@ -22,7 +22,49 @@ export class TicketsService {
     @InjectRepository(Jeux) private jeuxRepository: Repository<Jeux>,
     @InjectRepository(Produit) private produitRepository: Repository<Produit>,
     @InjectRepository(Gain) private gainRepository: Repository<Gain>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
+
+  async createTicketForStore(): Promise<Ticket> {
+    const newTicket = this.ticketRepository.create();
+
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let ticketNumber = '';
+
+    for (let i = 0; i < 15; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      ticketNumber += characters.charAt(randomIndex);
+    }
+    newTicket.numTicket = ticketNumber;
+    newTicket.etat = true;
+    newTicket.user = null;
+
+    const activeJeux = await this.jeuxRepository.findOne({
+      where: {
+        dateFin: MoreThan(new Date()),
+      },
+      relations: ['jeuxDetails'],
+    });
+
+    if (!activeJeux || activeJeux.jeuxDetails.length === 0) {
+      throw new BadRequestException('No active Jeux available.');
+    }
+
+    const randomIndex = Math.floor(
+      Math.random() * activeJeux.jeuxDetails.length,
+    );
+    const selectedJeuxDetails = activeJeux.jeuxDetails[randomIndex];
+    newTicket.jeuxDetails = selectedJeuxDetails;
+
+    const gain = new Gain();
+    const newDate = new Date(activeJeux.dateFin);
+    newDate.setMonth(newDate.getMonth() + 1);
+    gain.dateLimiteDeRecuperation = newDate;
+    await this.gainRepository.save(gain);
+    newTicket.gains = [gain];
+
+    return this.ticketRepository.save(newTicket);
+  }
 
   async create(createTicketDto: CreateTicketDto, user: User) {
     const { montant, produitIds } = createTicketDto;
@@ -115,6 +157,16 @@ export class TicketsService {
     return this.ticketRepository.save(newTicket);
   }
 
+  async getUserTicketsHistory(user: User): Promise<Ticket[]> {
+    return this.ticketRepository
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.gains', 'gain')
+      .leftJoinAndSelect('ticket.jeuxDetails', 'jeuxDetails')
+      .where('ticket.user = :userId', { userId: user.id })
+      .andWhere('ticket.etat = :etat', { etat: true })
+      .getMany();
+  }
+
   async findAll(user: User) {
     try {
       const tickets = await this.ticketRepository
@@ -150,12 +202,50 @@ export class TicketsService {
     return ticket;
   }
 
+  async findParticipant(username?: string, ticketNumber?: string) {
+    const query = this.ticketRepository
+      .createQueryBuilder('ticket')
+      .leftJoinAndSelect('ticket.user', 'user')
+      .select(['ticket.numTicket', 'ticket.etat', 'user.username', 'user.id']);
+
+    if (username) {
+      query.andWhere('user.username LIKE :username', {
+        username: `%${username}%`,
+      });
+    }
+
+    if (ticketNumber) {
+      query.andWhere('ticket.numTicket LIKE :ticketNumber', {
+        ticketNumber: `%${ticketNumber}%`,
+      });
+    }
+
+    const tickets = await query.getMany();
+
+    return tickets.map((ticket) => ({
+      userId: ticket.user.id,
+      username: ticket.user.username,
+      ticketNumber: ticket.numTicket,
+      status: ticket.etat ? 'Active' : 'Inactive',
+    }));
+  }
+
+  async countParticipants() {
+    const count = await this.ticketRepository
+      .createQueryBuilder('ticket')
+      .select('COUNT(DISTINCT ticket.user)', 'participantCount')
+      .getRawOne();
+
+    return count.participantCount;
+  }
+
   async findOneByNumTicket(numTicket: string, user: User): Promise<Ticket> {
     const ticket = await this.ticketRepository
       .createQueryBuilder('ticket')
       .leftJoinAndSelect('ticket.jeuxDetails', 'jeuxDetails')
       .leftJoinAndSelect('jeuxDetails.jeux', 'jeux')
       .leftJoinAndMapMany('ticket.produits', 'ticket.produits', 'produit')
+      .leftJoinAndSelect('ticket.gains', 'gain')
       .leftJoinAndSelect('ticket.user', 'user')
       .where('ticket.numTicket = :numTicket', { numTicket })
       .andWhere('user.id = :userId', { userId: user.id })
@@ -165,5 +255,39 @@ export class TicketsService {
       throw new NotFoundException(`Ticket with number ${numTicket} not found`);
     }
     return ticket;
+  }
+
+  async findByNum(numTicket: string): Promise<Ticket> {
+    const ticket = await this.ticketRepository.findOneBy({
+      numTicket: numTicket,
+    });
+
+    if (!ticket) {
+      throw new NotFoundException(`Ticket with number ${numTicket} not found`);
+    }
+    return ticket;
+  }
+
+  async assignUserToTicket(ticketId: number, userId: number): Promise<Ticket> {
+    const ticket = await this.ticketRepository.findOneBy({
+      id: ticketId,
+    });
+
+    if (!ticket) {
+      throw new NotFoundException('Ticket not found');
+    }
+
+    if (ticket.user) {
+      throw new BadRequestException('Ticket is already assigned to a user');
+    }
+
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    ticket.user = user;
+    ticket.participer = true;
+    return this.ticketRepository.save(ticket);
   }
 }

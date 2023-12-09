@@ -9,6 +9,7 @@ import { JeuxModule } from './jeux/jeux.module';
 import { JeuxDetailsModule } from './jeux-details/jeux-details.module';
 import { ProduitsModule } from './produits/produits.module';
 import { GainModule } from './gain/gain.module';
+import { BlogsModule } from './blogs/blogs.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { GainModule } from './gain/gain.module';
     JeuxDetailsModule,
     ProduitsModule,
     GainModule,
+    BlogsModule,
   ],
   controllers: [
     AppController,
