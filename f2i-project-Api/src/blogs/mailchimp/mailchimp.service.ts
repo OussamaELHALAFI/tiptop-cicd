@@ -5,17 +5,20 @@ const mailchimp = require('@mailchimp/mailchimp_marketing');
 export class MailchimpService {
   constructor() {
     mailchimp.setConfig({
-      apiKey: '563ccedfeec8adc7f3943958195a384a-us21',
-      server: 'us21',
+      apiKey: process.env.API_MAILCHIMP,
+      server: process.env.SERVER_MAILCHIMP,
     });
   }
 
   async addSubscriber(email: string): Promise<any> {
     try {
-      const response = await mailchimp.lists.addListMember('3cf4533c02', {
-        email_address: email,
-        status: 'subscribed',
-      });
+      const response = await mailchimp.lists.addListMember(
+        process.env.MEMBER_ID,
+        {
+          email_address: email,
+          status: 'subscribed',
+        },
+      );
       return response;
     } catch (error) {
       console.error('Mailchimp API error', error.response?.data || error);

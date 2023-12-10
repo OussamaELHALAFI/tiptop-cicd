@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Ticket } from './entities/ticket.entity';
-import { In, MoreThan, Repository } from 'typeorm';
+import { In, MoreThan, Repository, EntityManager } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Jeux } from 'src/jeux/entities/jeux.entity';
 import { Produit } from 'src/produits/entities/produit.entity';
@@ -18,6 +18,7 @@ import { Gain } from 'src/gain/entities/gain.entity';
 @Injectable()
 export class TicketsService {
   constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
     @InjectRepository(Ticket) private ticketRepository: Repository<Ticket>,
     @InjectRepository(Jeux) private jeuxRepository: Repository<Jeux>,
     @InjectRepository(Produit) private produitRepository: Repository<Produit>,
@@ -288,5 +289,16 @@ export class TicketsService {
 
     ticket.user = user;
     return this.ticketRepository.save(ticket);
+  }
+
+  async update(id: number, updateTicketDto: UpdateTicketDto, user: User) {
+    const updatedTicket = await this.findOne(id, user);
+
+    if (!updatedTicket) {
+      throw new NotFoundException(`Ticket with ID #${id} not found`);
+    }
+
+    Object.assign(updatedTicket, updateTicketDto);
+    return this.ticketRepository.save(updatedTicket);
   }
 }
