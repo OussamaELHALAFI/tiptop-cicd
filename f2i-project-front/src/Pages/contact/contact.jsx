@@ -9,13 +9,13 @@ import AcademicWarning from '../../components/academicWarning';
 function Contact() {
   const faqData = [
     {
-      question: "How can I contact support?",
+      question: "Comment puis-je contacter le support ?",
       answer:
-        "You can contact us through our contact form or by emailing support@example.com.",
+      "Vous pouvez nous contacter via notre formulaire de contact ou en envoyant un email à support@tiptop.com.",
     },
     {
-      question: "Where is your company located?",
-      answer: "Our company is located at 123 Main Street, Hometown, ABC.",
+      question: "Où se situe votre entreprise ?",
+      answer: "Notre entreprise est située au 18 rue Léon Frot, 75011 Paris.",
     },
   ];
 
@@ -118,7 +118,7 @@ function Contact() {
       <Button />
       <div >
         <h2 className="text-2xl font-semibold mb-4">
-          Frequently Asked Questions
+        Questions Fréquemment Posées
         </h2>
         <div className="container mx-auto my-10 p-6 bg-gray-100 rounded-lg shadow-lg text-gray-800">
           {faqData.map((faq, index) => (
