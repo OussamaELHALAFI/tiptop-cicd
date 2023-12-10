@@ -28,7 +28,7 @@ flex-direction: row;
 align-items: center;
 justify-content: space-around;
 width: 80%; 
-position: relative; // Pour le trait vertical
+position: relative; 
 
 @media (max-width: 768px) {
   flex-direction: column;
@@ -70,6 +70,8 @@ border-radius: 4px;
 background-color: #4CAF50 !important;
 color: white;
 cursor: pointer;
+font-family: 'Quicksand', sans-serif;
+font-weight: bold;
 
 &:hover {
   background-color: #45a049 !important;
@@ -84,6 +86,7 @@ const Input = styled.input`
 padding: 10px;
 border: 1px solid #ccc;
 border-radius: 4px;
+width: 110%;
 
 @media (max-width: 768px) {
   width: calc(100% - 20px); // Account for padding
@@ -101,6 +104,10 @@ cursor: pointer;
 display: flex;
 align-items: center;
 gap: 10px;
+p{
+font-family: 'Quicksand', sans-serif;
+font-weight: bold;
+}
 
 @media (max-width: 768px) {
   justify-content: center;
@@ -124,18 +131,27 @@ const Label = styled.label`
 `;
 
 const Text = styled.span`
-  margin-left: 8px; // Ajustez pour aligner avec votre design
+  margin-left: 8px; 
+  font-family: 'Quicksand', sans-serif;
+font-weight: bold;
 `;
 
 const LinkText = styled(Link)`
   color: blue;
   text-decoration: underline;
+  font-family: 'Quicksand', sans-serif;
+font-weight: bold;
 
   &:hover {
     text-decoration: none;
   }
 `;
 
+const Title = styled.h3`
+font-family: 'Quicksand', sans-serif;
+font-weight: bold;
+font-size: 18px;
+`;
 
 const SignupLogin = () => {
     const navigate = useNavigate();
@@ -256,7 +272,7 @@ const SignupLogin = () => {
             } finally {
                 setIsSubmitting(false);
             }
-        }else{
+        } else {
             setIsSubmitting(false);
 
         }
@@ -274,7 +290,7 @@ const SignupLogin = () => {
         <PageContainer>
             <FormContainer>
                 <Form onSubmit={handleSignupSubmit}>
-                    <h3>Inscription</h3>
+                    <Title>Inscription</Title>
                     <Input type="text" placeholder="Nom D'utilisateur" name="username" value={signupForm.username} onChange={handleSignupChange} />
                     <Input type="email" placeholder="Email" name="email" value={signupForm.email} onChange={handleSignupChange} />
                     <Tooltip title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule et un caractère spécial @,#,=,+,&.......">
@@ -293,15 +309,15 @@ const SignupLogin = () => {
                     </CheckboxContainer>
                     <ValidButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Inscription en cours...' : 'Créer un compte'}</ValidButton>
                     <SocialButton startIcon={<GoogleIcon />} onClick={() => {/* logique de connexion Google */ }} style={{ backgroundColor: '#4285F4', color: 'white' }}>
-                        S'inscrire avec Google
+                        <p>S'inscrire avec Google</p>
                     </SocialButton>
                     <SocialButton startIcon={<FacebookIcon />} onClick={() => {/* logique de connexion Facebook */ }} style={{ backgroundColor: '#1877F2', color: 'white' }}>
-                        S'inscrire avec Facebook
+                    <p> S'inscrire avec Facebook </p>
                     </SocialButton>
                 </Form>
                 <VerticalLine />
                 <Form onSubmit={handleLoginSubmit}>
-                    <h3>Connexion</h3>
+                    <Title>Connexion</Title>
                     <Input type="email" placeholder="Email" name="email" value={loginForm.email} onChange={handleLoginChange} />
                     <Input type="password" placeholder="Mot de passe" name="password" value={loginForm.password} onChange={handleLoginChange} />
                     {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
