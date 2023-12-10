@@ -96,7 +96,6 @@ function Navbar() {
   const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState(null);
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false); // Remplacez ceci par la logique d'authentification réelle
   const { isAuthenticated, handleAuthChange } = useAuth();
   useEffect(() => {
     const handleResize = () => {
@@ -179,10 +178,17 @@ function Navbar() {
           )}
           <Menu anchorEl={mobileMenuAnchorEl} open={Boolean(mobileMenuAnchorEl)} onClose={handleMobileMenuClose}>
             <MenuItem component={NavLink} to="/home" onClick={handleMobileMenuClose}>Accueil</MenuItem>
-            <MenuItem onClick={handleMobileMenuClose}>L'entreprise</MenuItem>
+            <MenuItem component={NavLink} to="/about" onClick={handleMobileMenuClose}>L'entreprise</MenuItem>
             <MenuItem component={NavLink} to="/blog" onClick={handleMobileMenuClose}>Blog</MenuItem>
-            <MenuItem onClick={handleMobileMenuClose}>Participer</MenuItem>
+            <MenuItem component={NavLink} to="/participer" onClick={handleMobileMenuClose}>Participer</MenuItem>
             <MenuItem component={NavLink} to="/contact" onClick={handleMobileMenuClose}>Contact</MenuItem>
+            {isAuthenticated && (
+              <>
+                <MenuItem component={NavLink} to="/user" onClick={handleMobileMenuClose}>Mon profil</MenuItem>
+                <MenuItem component={NavLink} to="/gain" onClick={handleMobileMenuClose}>Mes gains</MenuItem>
+                <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+              </>
+            )}
           </Menu>
         </NavContainer>
       </StyledToolbar>

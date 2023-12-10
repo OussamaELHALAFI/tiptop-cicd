@@ -16,6 +16,9 @@ h2 {
     font-weight: 600;
     font-size: 40px;
     font-family: 'Quicksand', sans-serif;
+    @media (max-width: 480px) { // Pour les téléphones
+        font-size: 25px;
+    }
 }
 `;
 
@@ -25,6 +28,14 @@ const AboutSection = styled.div`
     width: 80%;  
     align-items: center;
     justify-content: space-between; 
+    @media (max-width: 768px) { // Pour les tablettes
+        flex-direction: column;
+        text-align: center;
+    }
+
+    @media (max-width: 480px) { // Pour les téléphones
+        width: 95%;
+    }
 `;
 
 const TeaImage = styled.div`
@@ -32,6 +43,9 @@ const TeaImage = styled.div`
     img {
         width: 100%;
         object-fit: cover;
+    }
+    @media (max-width: 768px) { // Pour les tablettes
+        margin-bottom: 20px;
     }
 `;
 
@@ -46,7 +60,15 @@ const AboutText = styled.div`
         font-size: 30px;
   font-family: 'Quicksand', sans-serif;
   font-weight: 500;
+    
+    @media (max-width: 768px) { // Pour les tablettes
+        font-size: 25px;
     }
+
+    @media (max-width: 480px) { // Pour les téléphones
+        font-size: 20px;
+    }
+}
 `;
 
 function AboutUs() {

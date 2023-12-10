@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
 
 
@@ -145,6 +146,9 @@ const SignupLogin = () => {
     const [signupForm, setSignupForm] = useState({ username: '', email: '', password: '', termsAccepted: false });
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+
 
     // Effet pour rediriger si l'utilisateur est déjà connecté
     useEffect(() => {
@@ -199,26 +203,35 @@ const SignupLogin = () => {
         if (!signupForm.username.trim()) {
             toast.error('Le nom d\'utilisateur est requis');
             isValid = false;
+            return;
         } else if (!/[a-zA-Z]/.test(signupForm.username)) {
             toast.error('Le nom d\'utilisateur doit contenir au moins une lettre');
             isValid = false;
+            return;
         }
         // Validation de l'email
         if (!signupForm.email.trim()) {
             toast.error('L\'email est requis');
             isValid = false;
+            return;
         } else if (!/\S+@\S+\.\S+/.test(signupForm.email)) {
             toast.error('L\'email n\'est pas valide');
             isValid = false;
+            return;
         }
         // Validation du mot de passe
         if (!signupForm.password) {
             toast.error('Le mot de passe est requis');
             isValid = false;
-        } else if (signupForm.password.length < 6) {
-            toast.error('Le mot de passe doit comporter au moins 6 caractères');
-            isValid = false;
+            return;
         }
+
+        if (!passwordRegex.test(signupForm.password)) {
+            toast.error('Le mot de passe ne répond pas aux exigences.');
+            isValid = false;
+            return;
+        }
+
         if (!signupForm.termsAccepted) {
             toast.error('Vous devez accepter les Conditions Générales.');
             return;
@@ -243,6 +256,9 @@ const SignupLogin = () => {
             } finally {
                 setIsSubmitting(false);
             }
+        }else{
+            setIsSubmitting(false);
+
         }
     };
 
@@ -261,7 +277,9 @@ const SignupLogin = () => {
                     <h3>Inscription</h3>
                     <Input type="text" placeholder="Nom D'utilisateur" name="username" value={signupForm.username} onChange={handleSignupChange} />
                     <Input type="email" placeholder="Email" name="email" value={signupForm.email} onChange={handleSignupChange} />
-                    <Input type="password" placeholder="Mot de passe" name="password" value={signupForm.password} onChange={handleSignupChange} />
+                    <Tooltip title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule et un caractère spécial @,#,=,+,&.......">
+                        <Input type="password" placeholder="Mot de passe" name="password" value={signupForm.password} onChange={handleSignupChange} />
+                    </Tooltip>
                     <CheckboxContainer>
                         <Label>
                             <CheckboxInput
