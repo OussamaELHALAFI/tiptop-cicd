@@ -135,6 +135,16 @@ export class TicketsController {
   ): Promise<Ticket> {
     return this.ticketsService.assignUserToTicket(ticketId, userId);
   }
+
+  @Patch(':id/updateParticiper')
+  @ApiBearerAuth('jwt')
+  update(
+    @Param('id') id: string,
+    @Body() updateTicketDto: UpdateTicketDto,
+    @CurrentUser() user: User,
+  ) {
+    return this.ticketsService.update(+id, updateTicketDto, user);
+  }
   // @Delete(':id')
   // remove(@Param('id') id: string) {
   //   return this.ticketsService.remove(+id);
