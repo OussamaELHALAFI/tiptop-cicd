@@ -4,6 +4,7 @@ import { BlogsController } from './blogs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Blog } from './entities/blog.entity';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { MailchimpService } from './mailchimp/mailchimp.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     }),
   ],
   controllers: [BlogsController],
-  providers: [BlogsService, JwtService],
+  providers: [BlogsService, JwtService, MailchimpService],
 })
 export class BlogsModule {}

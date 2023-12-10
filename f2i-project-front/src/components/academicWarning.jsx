@@ -7,6 +7,8 @@ const WarningContainer = styled.div`
   text-align: center; // Centrer le texte
   border-radius: 5px; // Adoucir les coins du conteneur
   font-size: 18px; // Taille de la police
+  font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
 `;
 
 const AcademicWarning = () => (

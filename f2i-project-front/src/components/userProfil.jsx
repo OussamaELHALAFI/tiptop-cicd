@@ -103,7 +103,7 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   margin-top: 1rem;
-  background-color: #0275d8;
+  background-color: #4CAF50 !important;
   color: white;
   cursor: pointer;
   &:hover {
@@ -167,8 +167,8 @@ const Profile = () => {
               <AccountCircleIcon />
             </Avatar>
           )}
-          <Button>Télécharger</Button>
-          <Button>Supprimer</Button>
+          {/* <Button>Télécharger</Button>
+          <Button>Supprimer</Button> */}
         </ProfileImageSection>
         <Form onSubmit={handleSubmit}>
           <ProfileDetails>

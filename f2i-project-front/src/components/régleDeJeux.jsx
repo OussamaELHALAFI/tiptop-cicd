@@ -1,4 +1,3 @@
-// GameRulesDialog.js
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -33,8 +32,8 @@ const GameRulesDialog = ({ open, handleClose }) => {
                 <li>Un coffret découverte d’une valeur de 69€</li>
               </ul>
             </li>
-            <li>Le jeu concours se déroule sur 30 jours avec un maximum de 1 500 000 tickets distribués.</li>
-            <li>Les gains peuvent être réclamés en magasin ou en ligne dans les 60 jours suivant la fin du jeu.</li>
+            <li>Le jeu concours se déroule sur 30 jours.</li>
+            <li>Les gains peuvent être réclamés en magasin ou en ligne dans les 60 jours depuis la date debut du jeu.</li>
             <li>Un tirage au sort final pour gagner un an de thé d’une valeur de 360€.</li>
           </ul>
           Nous vous souhaitons bonne chance et espérons que vous apprécierez nos thés de qualité!

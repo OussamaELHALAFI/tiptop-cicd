@@ -9,18 +9,18 @@ import AcademicWarning from '../../components/academicWarning';
 function Contact() {
   const faqData = [
     {
-      question: "How can I contact support?",
+      question: "Comment puis-je contacter le support ?",
       answer:
-        "You can contact us through our contact form or by emailing support@example.com.",
+      "Vous pouvez nous contacter via notre formulaire de contact ou en envoyant un email à support@tiptop.com.",
     },
     {
-      question: "Where is your company located?",
-      answer: "Our company is located at 123 Main Street, Hometown, ABC.",
+      question: "Où se situe votre entreprise ?",
+      answer: "Notre entreprise est située au 18 rue Léon Frot, 75011 Paris.",
     },
   ];
 
   return (
-    <div className="container mx-auto mt-10  flex flex-col bg-white shadow-lg rounded-lg overflow-hidden text-gray-800">
+    <div className="w-full mx-auto mt-10 flex flex-col bg-white shadow-lg rounded-lg overflow-hidden text-gray-800">
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/2 p-4">
           <div className="mb-6">
@@ -114,20 +114,11 @@ function Contact() {
           </form>
         </div>
       </div>
-      {/* <div className="my-6">
-        <CounterHeure></CounterHeure>
-      </div> */}
       <Countdown />
-      {/* <div className="container mx-auto my-10 flex flex-col justify-center items-center gap-3 text-white text-center"> */}
-        {/* <button className="bg-green-500 rounded-full border-none py-2 px-6 md:px-20 text-xl md:text-2xl transition duration-300 hover:bg-green-600 focus:outline-none focus:ring focus:border-green-300">
-          Participer
-        </button>
-        <span className="block bg-orange-400 h-1 w-1/4 md:w-1/2 rounded-full mt-3"></span> */}
-        <Button />
-      {/* </div> */}
+      <Button />
       <div >
         <h2 className="text-2xl font-semibold mb-4">
-          Frequently Asked Questions
+        Questions Fréquemment Posées
         </h2>
         <div className="container mx-auto my-10 p-6 bg-gray-100 rounded-lg shadow-lg text-gray-800">
           {faqData.map((faq, index) => (
@@ -141,28 +132,11 @@ function Contact() {
         <p className="text-lg text-center px-4 mb-4 md:mb-0 md:mr-4">
           Vous n’avez pas trouvé réponse à votre question?
         </p>
-        <button className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300">
+        <button className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           Posez-la ici
         </button>
       </div>
-
-      {/* <section className="container mx-auto my-10 flex flex-col justify-center items-center gap-5 bg-gray-100 p-8 rounded-lg text-gray-800 text-center">
-        <h3 className="text-2xl font-semibold">Restez à l’écoute !</h3>
-        <span className="text-center px-4">
-          "Restez informé et profitez d'avantages exclusifs en vous inscrivant à
-          notre newsletter !"
-        </span>
-        <div className="flex flex-col md:flex-row items-center mt-4 gap-3">
-          <input
-            type="text"
-            placeholder="Entrez votre e-mail"
-            className="px-9 py-2 rounded-full focus:outline-none"
-          />
-          <button className="bg-green-500 px-4 py-2 rounded-full text-white transition duration-300 hover:bg-green-600">
-            S'abonner
-          </button>
-        </div>
-      </section> */}
       <AcademicWarning />
       <Newsletter />
     </div>

@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { JwtCustomStrategy } from './auth/jwt-stratgy';
+import { GoogleStrategy } from './auth/google.strategy';
+import { FacebookStrategy } from './auth/facebook.strategy';
 // import { TicketsService } from 'src/tickets/tickets.service';
 // import { IsAdminPipe } from './pipe/is-admin.pipe';
 
@@ -25,7 +27,13 @@ import { JwtCustomStrategy } from './auth/jwt-stratgy';
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, AuthService, JwtCustomStrategy],
+  providers: [
+    UsersService,
+    AuthService,
+    JwtCustomStrategy,
+    GoogleStrategy,
+    FacebookStrategy,
+  ],
   exports: [UsersService, PassportModule, JwtCustomStrategy],
 })
 export class UsersModule {}

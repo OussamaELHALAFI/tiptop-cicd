@@ -15,8 +15,6 @@ import AcademicWarning from '../../components/academicWarning';
 const Home = () => {
   return (
     <div className="homeContainer">
-      {/* <HeroSection /> */}
-      {/* <Navbar /> */}
       <Slide data={cards} slidesPerView={1} />
       <AboutUs />
       <Countdown />
@@ -24,7 +22,6 @@ const Home = () => {
       <Testimonials />
       <AcademicWarning />
       <NewsletterSignup />
-      {/* <Footer /> */}
     </div>
   );
 }

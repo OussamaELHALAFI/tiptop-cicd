@@ -5,8 +5,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
-import { useAuth  } from '../services/authContex';
+import { useAuth } from '../services/authContex';
 import logo from '../assets/logo.png';
+import { toast } from 'react-toastify';
 
 const StyledAppBar = styled(AppBar)`
   && {
@@ -95,9 +96,7 @@ function Navbar() {
   const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState(null);
   const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false); // Remplacez ceci par la logique d'authentification réelle
   const { isAuthenticated, handleAuthChange } = useAuth();
-  console.log(isAuthenticated);
   useEffect(() => {
     const handleResize = () => {
       const zoomLevel = window.innerWidth / window.outerWidth;
@@ -131,6 +130,7 @@ function Navbar() {
     accountService.logout();
     handleAuthChange(false);
     handleProfileMenuClose();
+    toast.success("Déconnexion réussie.");
     navigate('/home');
   };
 
@@ -139,8 +139,10 @@ function Navbar() {
     <StyledAppBar position="static">
       <StyledToolbar>
         <LogoAndTitleContainer>
-          <StyledTypography variant="h6" component="h1">THÉ TIP TOP</StyledTypography>
-          <Logo src={logo} alt="ThéTipTop Logo" />
+          <Link to="/home" >
+            <StyledTypography variant="h6" component="h1">THÉ TIP TOP</StyledTypography>
+            <Logo src={logo} alt="ThéTipTop Logo" />
+          </Link>
         </LogoAndTitleContainer>
         <NavContainer>
           <SearchContainer>
@@ -154,19 +156,19 @@ function Navbar() {
           ) : (
             <div className="nav-container">
               <StyledButton color="inherit"><NavLink to="/home" className="nav-link" activeClassName="active">Accueil</NavLink></StyledButton>
-              <StyledButton color="inherit">L'entreprise</StyledButton>
+              <StyledButton color="inherit"><NavLink to="/about" className="nav-link" activeClassName="active">L'entreprise</NavLink></StyledButton>
               <StyledButton color="inherit"><NavLink to="/blog" className="nav-link" activeClassName="active">Blog</NavLink></StyledButton>
               <StyledButton color="inherit"><NavLink to="/participer" className="nav-link" activeClassName="active">Participer</NavLink></StyledButton>
               <StyledButton color="inherit"><NavLink to="/contact" className="nav-link" activeClassName="active"> Contact </NavLink></StyledButton>
               {isAuthenticated ? (
                 <>
-                <StyledButton color="inherit">
-                  <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
-                  <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
-                    <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
-                    <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
-                    <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
-                  </Menu>
+                  <StyledButton color="inherit">
+                    <Avatar onClick={handleProfileMenuOpen} style={{ cursor: 'pointer' }} />
+                    <Menu anchorEl={profileMenuAnchorEl} open={Boolean(profileMenuAnchorEl)} onClose={handleProfileMenuClose}>
+                      <MenuItem component={Link} to="/user" onClick={handleProfileMenuClose}>Mon profil</MenuItem>
+                      <MenuItem component={Link} to="/gain" onClick={handleProfileMenuClose}>Mes gains</MenuItem>
+                      <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+                    </Menu>
                   </StyledButton>
                 </>
               ) : (
@@ -176,10 +178,17 @@ function Navbar() {
           )}
           <Menu anchorEl={mobileMenuAnchorEl} open={Boolean(mobileMenuAnchorEl)} onClose={handleMobileMenuClose}>
             <MenuItem component={NavLink} to="/home" onClick={handleMobileMenuClose}>Accueil</MenuItem>
-            <MenuItem onClick={handleMobileMenuClose}>L'entreprise</MenuItem>
+            <MenuItem component={NavLink} to="/about" onClick={handleMobileMenuClose}>L'entreprise</MenuItem>
             <MenuItem component={NavLink} to="/blog" onClick={handleMobileMenuClose}>Blog</MenuItem>
-            <MenuItem onClick={handleMobileMenuClose}>Participer</MenuItem>
+            <MenuItem component={NavLink} to="/participer" onClick={handleMobileMenuClose}>Participer</MenuItem>
             <MenuItem component={NavLink} to="/contact" onClick={handleMobileMenuClose}>Contact</MenuItem>
+            {isAuthenticated && (
+              <>
+                <MenuItem component={NavLink} to="/user" onClick={handleMobileMenuClose}>Mon profil</MenuItem>
+                <MenuItem component={NavLink} to="/gain" onClick={handleMobileMenuClose}>Mes gains</MenuItem>
+                <MenuItem onClick={handleLogout}>Déconnexion</MenuItem>
+              </>
+            )}
           </Menu>
         </NavContainer>
       </StyledToolbar>
