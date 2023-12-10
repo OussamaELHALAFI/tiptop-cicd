@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
+import { getWin, claimWin  } from '../api/participer';
+import { toast } from 'react-toastify';
 
-// Styled components
 const PageContainer = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -64,37 +65,96 @@ const ClaimButton = styled.button`
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
+  font-family: 'Quicksand', sans-serif; 
+    font-weight: bold;
 
   @media (max-width: 480px) { // mobiles
     padding: 8px 16px;
     font-size: 14px;
   }
 `;
-
+const StyledSpan = styled.span`
+  font-size: 14px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+`;
+const Title = styled.h2`
+  font-size: 18px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+`;
 
 const WinningsPage = () => {
-  const [winnings, setWinnings] = useState([
-    { id: 1, amount: '100€', claimed: false },
-    { id: 2, amount: '250€', claimed: false },
-  ]);
+    const [winnings, setWinnings] = useState([]);
+    const token = localStorage.getItem('token');
+    useEffect(() => {
+        const getWins = async () => {
 
-  const claimWinning = (id) => {
-    setWinnings(winnings.map(winning => 
-      winning.id === id ? { ...winning, claimed: true } : winning
-    ));
-  };
+          try {
+            const winsData = await getWin(token);
+            if (winsData) {
+                let  formattedWins = winsData.map(win => ({
+                id: win.id,
+                typePrix: win.jeuxDetails.typePrix,
+                valeurPrix: win.jeuxDetails.valeurPrix,
+                claimed: win.gains.some(gain => gain.dateDeRecuperation !== null),
+                gainId: win.gains[0].id,
+                dateDeRecuperation: win.gains[0].dateDeRecuperation,
+                dateLimitedeRecuperation: win.gains[0].dateLimiteDeRecuperation
+              }));
+              formattedWins = formattedWins.sort((a, b) => {
+                if (!a.claimed && !b.claimed) {
+                  return 0; // Les deux gains ne sont pas réclamés, pas de changement
+                } else if (!a.claimed) {
+                  return -1; // Les gains non réclamés en premier
+                } else if (!b.claimed) {
+                  return 1; // Les gains non réclamés en premier
+                } else {
+                  // Trier par date de récupération si les deux gains sont réclamés
+                  return new Date(b.dateDeRecuperation) - new Date(a.dateDeRecuperation);
+                }
+              });
+              setWinnings(formattedWins);
+            }
+          } catch (error) {
+            console.error('Erreur lors de la récupération des gains :', error);
+          }
+        };
+    
+        getWins();
+      }, []);
+console.log(winnings)
+      const claimWinning = async (gainId) => {
+        try {
+          
+          const result = await claimWin(gainId, token);
+          const currentDate = new Date().toISOString();
+          if (result) {
+           
+            setWinnings(winnings.map(winning => 
+              winning.gainId === gainId ? { ...winning, claimed: true, dateDeRecuperation: currentDate } : winning
+            ));
+            toast.success("Gain réclamé avec succès !");
+          }
+        } catch (error) {
+            toast.error("Erreur lors de la réclamation du gain.");
+        }
+      };
+    
 
   return (
     <PageContainer>
-      <h1>Mes Gains</h1>
+      <Title>Mes Gains</Title>
       <WinningsList>
         {winnings.map(winning => (
-          <WinningItem key={winning.id}>
-            <span>{winning.amount}</span>
+          <WinningItem key={winning.gainId}>
+            {!winning.claimed ?(
+            <StyledSpan>{winning.typePrix} - {winning.valeurPrix}€ - {` (A recupérer avant ${new Date(winning.dateLimitedeRecuperation).toLocaleDateString()})`}</StyledSpan>
+            ):(<StyledSpan>{winning.typePrix} - {winning.valeurPrix}€</StyledSpan>)}
             {winning.claimed ? (
-              <span>Réclamé</span>
+              <StyledSpan>Réclamé  {` le ${new Date(winning.dateDeRecuperation).toLocaleDateString()}`}</StyledSpan>
             ) : (
-              <ClaimButton onClick={() => claimWinning(winning.id)}>
+              <ClaimButton onClick={() => claimWinning(winning.gainId)}>
                 Réclamer
               </ClaimButton>
             )}

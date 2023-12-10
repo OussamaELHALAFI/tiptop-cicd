@@ -11,21 +11,23 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:5173',
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
   app.setGlobalPrefix('api');
   // app.useGlobalPipes(new IsAdminPipe());
   dotenv.config();
-  // app.use(
-  //   ['/', '/json'],
-  //   basicAuth({
-  //     challenge: true,
-  //     users: {
-  //       [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
-  //     },
-  //   }),
-  // );
+  app.use((req, res, next) => {
+    if (req.path === '/api') {
+      return basicAuth({
+        challenge: true,
+        users: {
+          [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
+        },
+      })(req, res, next);
+    }
+    next();
+  });
   const config = new DocumentBuilder()
     .setTitle('TipTop Api')
     .setDescription('The TipTop API description')
