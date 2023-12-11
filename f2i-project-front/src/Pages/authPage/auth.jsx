@@ -15,7 +15,9 @@ const PageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 const FormContainer = styled.div`
