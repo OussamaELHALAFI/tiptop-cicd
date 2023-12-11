@@ -159,7 +159,10 @@ function Navbar() {
                 to="/home"
                 className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
               >Accueil</NavLink></StyledButton>
-              <StyledButton color="inherit">L'entreprise</StyledButton>
+              <StyledButton color="inherit"><NavLink
+                to="/about"
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >L'entreprise</NavLink></StyledButton>
               <StyledButton color="inherit"><NavLink to="/blog" 
               className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
               >Blog</NavLink></StyledButton>
