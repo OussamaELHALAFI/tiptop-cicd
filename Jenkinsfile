@@ -25,6 +25,7 @@ pipeline {
         }
 
         //uncomment below stage when you want to enable testing for API
+        /*
         stage('Run API Tests') {
             steps {
                 dir('f2i-project-Api') {
@@ -34,7 +35,8 @@ pipeline {
                 }
             }
         }
-
+        */
+        
 
         stage('Push API Image to Docker Hub') {
             steps {
