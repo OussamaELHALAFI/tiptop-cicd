@@ -155,11 +155,20 @@ function Navbar() {
             </MenuButton>
           ) : (
             <div className="nav-container">
-              <StyledButton color="inherit"><NavLink to="/home" className="nav-link" activeClassName="active">Accueil</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/about" className="nav-link" activeClassName="active">L'entreprise</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/blog" className="nav-link" activeClassName="active">Blog</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/participer" className="nav-link" activeClassName="active">Participer</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/contact" className="nav-link" activeClassName="active"> Contact </NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink
+                to="/home"
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Accueil</NavLink></StyledButton>
+              <StyledButton color="inherit">L'entreprise</StyledButton>
+              <StyledButton color="inherit"><NavLink to="/blog" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Blog</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink to="/participer" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Participer</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink to="/contact" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              > Contact </NavLink></StyledButton>
               {isAuthenticated ? (
                 <>
                   <StyledButton color="inherit">
@@ -172,7 +181,9 @@ function Navbar() {
                   </StyledButton>
                 </>
               ) : (
-                <StyledButton color="inherit"><NavLink to="/signup" className="nav-link" activeClassName="active"> Connexion </NavLink></StyledButton>
+                <StyledButton color="inherit"><NavLink to="/signup" 
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+                > Connexion </NavLink></StyledButton>
               )}
             </div>
           )}
