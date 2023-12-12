@@ -4,14 +4,14 @@ import FAQItem from "../../components/Faq/FAQItem";
 import Button from "../../components/button";
 import Newsletter from "../../components/news";
 import Countdown from "../../components/down";
-import AcademicWarning from '../../components/academicWarning';
+import AcademicWarning from "../../components/academicWarning";
 
 function Contact() {
   const faqData = [
     {
       question: "Comment puis-je contacter le support ?",
       answer:
-      "Vous pouvez nous contacter via notre formulaire de contact ou en envoyant un email à support@tiptop.com.",
+        "Vous pouvez nous contacter via notre formulaire de contact ou en envoyant un email à support@tiptop.com.",
     },
     {
       question: "Où se situe votre entreprise ?",
@@ -116,9 +116,9 @@ function Contact() {
       </div>
       <Countdown />
       <Button />
-      <div >
-        <h2 className="text-2xl font-semibold mb-4">
-        Questions Fréquemment Posées
+      <div>
+        <h2 className="text-2xl font-semibold mb-4 ml-6 sm:ml-24">
+          Questions Fréquemment Posées
         </h2>
         <div className="container mx-auto my-10 p-6 bg-gray-100 rounded-lg shadow-lg text-gray-800">
           {faqData.map((faq, index) => (
@@ -132,8 +132,10 @@ function Contact() {
         <p className="text-lg text-center px-4 mb-4 md:mb-0 md:mr-4">
           Vous n’avez pas trouvé réponse à votre question?
         </p>
-        <button className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <button
+          className="bg-green-500 px-6 py-3 rounded-full text-white text-lg font-semibold transition duration-300 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           Posez-la ici
         </button>
       </div>
