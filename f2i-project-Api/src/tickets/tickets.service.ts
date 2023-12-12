@@ -206,8 +206,14 @@ export class TicketsService {
   async findParticipant(username?: string, ticketNumber?: string) {
     const query = this.ticketRepository
       .createQueryBuilder('ticket')
-      .leftJoinAndSelect('ticket.user', 'user')
-      .select(['ticket.numTicket', 'ticket.etat', 'user.username', 'user.id']);
+      .leftJoin('ticket.user', 'user')
+      .select([
+        'ticket.numTicket',
+        'ticket.etat',
+        'user.username',
+        'user.email',
+        'user.id',
+      ]);
 
     if (username) {
       query.andWhere('user.username LIKE :username', {
@@ -224,10 +230,11 @@ export class TicketsService {
     const tickets = await query.getMany();
 
     return tickets.map((ticket) => ({
-      userId: ticket.user.id,
-      username: ticket.user.username,
+      userId: ticket.user ? ticket.user.id : null,
+      username: ticket.user ? ticket.user.username : null,
+      userEmail: ticket.user ? ticket.user.email : null,
       ticketNumber: ticket.numTicket,
-      status: ticket.etat ? 'Active' : 'Inactive',
+      status: ticket.etat ? 'participer' : 'NonParticiper',
     }));
   }
 

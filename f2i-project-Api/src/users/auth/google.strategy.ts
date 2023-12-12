@@ -28,12 +28,12 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       return done(new Error('Profile is undefined'), null);
     }
 
-    const { name, emails, photos } = profile;
+    const { displayName, emails, photos } = profile;
     console.log(profile);
 
     const user = {
       email: emails[0].value,
-      username: name.givenName + ' ' + name.familyName,
+      username: displayName,
       picture: photos[0].value,
     };
     done(null, user);
