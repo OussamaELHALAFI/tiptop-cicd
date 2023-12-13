@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { JeuxDetails } from 'src/jeux-details/entities/jeux-details.entity';
-import { User } from 'src/users/entities/user.entity';
+import { JeuxDetails } from '../../jeux-details/entities/jeux-details.entity';
+import { User } from '../../users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,

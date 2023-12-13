@@ -6,7 +6,7 @@ import {
   ValidateNested,
   ArrayMinSize,
 } from 'class-validator';
-import { CreateJeuxDetailsDto } from 'src/jeux-details/dto/create-jeux-details.dto';
+import { CreateJeuxDetailsDto } from '../../jeux-details/dto/create-jeux-details.dto';
 
 export class CreateJeuxDto {
   @IsDate()

@@ -208,6 +208,7 @@ export class TicketsService {
       .createQueryBuilder('ticket')
       .leftJoin('ticket.user', 'user')
       .select([
+        'ticket.id',
         'ticket.numTicket',
         'ticket.etat',
         'user.username',
@@ -234,6 +235,7 @@ export class TicketsService {
       username: ticket.user ? ticket.user.username : null,
       userEmail: ticket.user ? ticket.user.email : null,
       ticketNumber: ticket.numTicket,
+      ticketId: ticket.id,
       status: ticket.etat ? 'participer' : 'NonParticiper',
     }));
   }

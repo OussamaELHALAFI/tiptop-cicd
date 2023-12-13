@@ -11,9 +11,9 @@ import {
 import { JeuxService } from './jeux.service';
 import { CreateJeuxDto } from './dto/create-jeux.dto';
 import { UpdateJeuxDto } from './dto/update-jeux.dto';
-import { JwtAuthGuard } from 'src/users/guards/auth-guard';
-import { CurrentUser } from 'src/users/decorators/user.decorator';
-import { User } from 'src/users/entities/user.entity';
+import { JwtAuthGuard } from '../users/guards/auth-guard';
+import { CurrentUser } from '../users/decorators/user.decorator';
+import { User } from '../users/entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RolesGuard } from 'src/users/guards/RolesGuard';
 import { Roles } from 'src/users/decorators/roles.decorator';
