@@ -36,6 +36,7 @@ export const TicketPage = lazy(() => import('./Pages/ticket'));
 export const ProductsPage = lazy(() => import('./Pages/products'));
 export const Page404 = lazy(() => import('./Pages/page-not-found'));
 export const LoginPage = lazy(() => import('./Pages/login'));
+export const CreateTicket = lazy(() => import('./Pages/createTicket.jsx'));
 import './fonts.css'
 import ThemeProvider from './theme';
 
@@ -93,6 +94,7 @@ function App() {
         { path: 'blog', element: <BlogPage /> },
         { path: 'ticket', element: <TicketPage /> },
         { path: 'user/create', element: <CreatePage /> },
+        { path: 'ticket/create', element: <CreateTicket /> },
       ],
     },
     {

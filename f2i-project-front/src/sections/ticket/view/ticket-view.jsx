@@ -22,6 +22,8 @@ import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 import { getTickets} from '../../../api/admin';
+import { useNavigate } from 'react-router-dom';
+import { createTicket} from '../../../api/admin';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +41,7 @@ export default function TicketPage() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const token = localStorage.getItem('token');
   const [ticketData, setTicketData] = useState([]); 
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getTicket = async () => {
@@ -112,6 +114,10 @@ export default function TicketPage() {
     filterName,
   });
 
+  const handleClickCreatePage = () => {
+    navigate('/admin/ticket/create');
+  };
+
   const notFound = !dataFiltered.length && !!filterName;
 
   return (
@@ -119,7 +125,7 @@ export default function TicketPage() {
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Tickets</Typography>
 
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button variant="contained"  onClick={handleClickCreatePage} color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New Ticket
         </Button>
       </Stack>
@@ -161,7 +167,7 @@ export default function TicketPage() {
                       status={row.status}
                       company={row.userEmail}
                       avatarUrl={row.avatarUrl}
-                      isVerified={row.isVerified}
+                      isVerified={row.paticiper}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />

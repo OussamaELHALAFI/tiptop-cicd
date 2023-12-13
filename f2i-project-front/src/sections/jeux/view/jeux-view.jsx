@@ -22,7 +22,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import { getJeux, createTicket} from '../../../api/admin';
+import { getJeux} from '../../../api/admin';
 
 // ----------------------------------------------------------------------
 
@@ -118,18 +118,6 @@ export default function JeuxPage() {
 
   const notFound = !dataFiltered.length && !!filterName;
 
-  const handleClickCreatePage = async() => {
-   
-      try {
-        const response = await createTicket(token);
-        // Gérez la réponse ici
-        console.log(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la création du ticket:", error);
-        // Gérez l'erreur ici
-      }
-      navigate('/admin/jeux/create');
-  };
 
   return (
     <Container>
@@ -138,7 +126,6 @@ export default function JeuxPage() {
 
         <Button
           variant="contained"
-          onClick={handleClickCreatePage}
           color="inherit"
           startIcon={<Iconify icon="eva:plus-fill" />}
         >
