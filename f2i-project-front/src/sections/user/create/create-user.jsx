@@ -16,6 +16,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { createUser } from '../../../api/auth';
+import { toast } from 'react-toastify';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -42,7 +43,7 @@ const CreateUser = () => {
     const user = {
       username: userData.name, // Ajustez selon les champs de votre formulaire
       email: userData.email,
-      password: userData.phoneNumber, // Assurez-vous d'avoir un champ pour le mot de passe
+      password: userData.motDePasse, // Assurez-vous d'avoir un champ pour le mot de passe
       // ... autres champs
       image: null,
       isAdmin: true
@@ -51,12 +52,21 @@ const CreateUser = () => {
     try {
       const response = await createUser(user);
       if (response.ok) {
-        // Traitement en cas de succès
-        console.log('User created successfully');
-        // Vous pouvez ajouter des actions supplémentaires ici, comme réinitialiser le formulaire
+        toast.success('User created successfully');
+        setUserData({ name: '',
+        email: '',
+        motDePasse: '',
+        country: '',
+        state: '',
+        city: '',
+        address: '',
+        zipCode: '',
+        company: '',
+        role: '',})
+
       } else {
-        // Gestion des erreurs
         console.error('Failed to create user');
+        toast.error('Failed to create user')
       }
     } catch (error) {
       console.error('Error during user creation', error);

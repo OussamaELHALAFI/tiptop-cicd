@@ -57,7 +57,6 @@ export default function TicketPage() {
 
     getTicket();
   }, [token]);
-  console.log(ticketData);
 
   const handleSort = (event, id) => {
     const isAsc = orderBy === id && order === 'asc';

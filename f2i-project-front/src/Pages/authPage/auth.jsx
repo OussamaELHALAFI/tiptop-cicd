@@ -9,6 +9,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import Tooltip from '@mui/material/Tooltip';
 import { toast } from 'react-toastify';
+import { getUser } from '../../api/authGoogle';
 
 
 const PageContainer = styled.div`
@@ -158,6 +159,7 @@ font-size: 18px;
 const SignupLogin = () => {
     const navigate = useNavigate();
     const { setToken, handleAuthChange } = useAuth();
+    const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
 
     // États pour les formulaires d'inscription et de connexion
     const [loginForm, setLoginForm] = useState({ email: '', password: '' });
@@ -280,8 +282,22 @@ const SignupLogin = () => {
         }
     };
 
-    const handleGoogleLogin = () => {
-        // Implementation of Google login logic
+ 
+        const handleGoogleLogin = async () => {
+            if (isGoogleAuthenticated) {
+                try {
+                    const jwt = await getUser();
+                    setIsGoogleAuthenticated(false); // Réinitialiser après avoir récupéré le JWT
+                } catch (error) {
+                    console.error('Erreur lors de la récupération du JWT', error);
+                }
+            } else {
+                // Redirection pour le premier clic
+                window.location.href = 'http://localhost:3001/api/users/google';
+                navigate('/signup');
+
+                setIsGoogleAuthenticated(true); // Supposer que l'utilisateur s'est authentifié avec succès
+            }
     };
 
     const handleFacebookLogin = () => {
@@ -310,7 +326,7 @@ const SignupLogin = () => {
                         <Text>et la <LinkText to="/politiqueDeConfidentialité">politique de confidentialité</LinkText>.</Text>
                     </CheckboxContainer>
                     <ValidButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Inscription en cours...' : 'Créer un compte'}</ValidButton>
-                    <SocialButton startIcon={<GoogleIcon />} onClick={() => {/* logique de connexion Google */ }} style={{ backgroundColor: '#4285F4', color: 'white' }}>
+                    <SocialButton startIcon={<GoogleIcon />} onClick={handleGoogleLogin} style={{ backgroundColor: '#4285F4', color: 'white' }}>
                         <p>S'inscrire avec Google</p>
                     </SocialButton>
                     <SocialButton startIcon={<FacebookIcon />} onClick={() => {/* logique de connexion Facebook */ }} style={{ backgroundColor: '#1877F2', color: 'white' }}>

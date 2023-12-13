@@ -22,7 +22,7 @@ import UserTableHead from '../user-table-head';
 import TableEmptyRows from '../table-empty-rows';
 import UserTableToolbar from '../user-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import { getJeux} from '../../../api/admin';
+import { getJeux } from '../../../api/admin';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ export default function JeuxPage() {
 
   const token = localStorage.getItem('token');
 
-  const [jeuxData, setJeuxData] = useState([]); 
+  const [jeuxData, setJeuxData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -51,7 +51,7 @@ export default function JeuxPage() {
       try {
         const jeuxRes = await getJeux(token);
         if (jeuxRes) {
-          setJeuxData(jeuxRes); 
+          setJeuxData(jeuxRes);
         }
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -116,6 +116,11 @@ export default function JeuxPage() {
     filterName,
   });
 
+  const handleClickCreatePage = async () => {
+
+    navigate('/admin/jeux/create');
+  };
+
   const notFound = !dataFiltered.length && !!filterName;
 
 
@@ -127,6 +132,7 @@ export default function JeuxPage() {
         <Button
           variant="contained"
           color="inherit"
+          onClick={handleClickCreatePage}
           startIcon={<Iconify icon="eva:plus-fill" />}
         >
           New Jeux

@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { createTicket} from '../../../api/admin';
+import { toast } from 'react-toastify';
 
 
 const CreateTicket = () => {
@@ -22,15 +23,19 @@ const CreateTicket = () => {
     setTicketData({ ...TicketData, [e.target.name]: e.target.value });
   };
 
-  const handleClickCreatePage = async() => {
+  const handleClickCreatePage = async(e) => {
+    e.preventDefault();
     try {
+      debugger
       const response = await createTicket(token);
-      // Gérez la réponse ici
-      console.log(response.data);
+  if (response.status === 201) {
+  
+    toast.success("ticket crée avec success");
+    }
     } catch (error) {
       console.error("Erreur lors de la création du ticket:", error);
+      toast.error("Erreur lors de la création du ticket")
     }
-    console.log('oki');
 };
 
   return (
@@ -46,7 +51,7 @@ const CreateTicket = () => {
         </Stack>
       </Box>
 
-      <form onSubmit= ''>
+      <form onSubmit= {handleClickCreatePage}>
         <Paper style={{ padding: '16px', margin: '16px 0' }}>
           <Grid container spacing={2}>
             
@@ -56,9 +61,9 @@ const CreateTicket = () => {
                 name="numJeux"
                 fullWidth
                 value={TicketData.nomJeux}
-                // onChange={handleTiketChange}
                 variant="outlined"
                 disabled="disabled"
+                onChange={handleTiketChange}
               />
               </Grid>
           </Grid>

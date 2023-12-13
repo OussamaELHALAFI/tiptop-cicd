@@ -13,6 +13,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createJeux } from '../../../api/admin';
+import { toast } from 'react-toastify';
 
 const CreateUser = () => {
   const [jeuxData, setJeuxData] = useState({
@@ -60,11 +61,20 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createJeux(jeuxData,token); // Utiliser la fonction importée pour l'appel API
-      // Gérez la réponse ici
+      const response = await createJeux(jeuxData,token); 
+      if (response.status === 201){
+        toast.success("Jeux crée avec success");
+        setJeuxData({ nomJeux: '',
+        dateDebut: '',
+        dateFin: '',
+        nombreDeTicketTotal: 0,
+        description: '',
+        grandLots: '',
+        jeuxDetails: [{ nomPrix: '', typePrix: '', valeurPrix: '', nombreTicket: 0 }],})
+      }
     } catch (error) {
       console.error("Erreur lors de l'envoi des données: ", error);
-      // Gérez l'erreur ici
+      toast.error("Erreur dans la creation"); 
     }
   };
 

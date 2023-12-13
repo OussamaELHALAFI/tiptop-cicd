@@ -28,6 +28,7 @@ export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
   const adminString = localStorage.getItem('user')
   const admin = adminString ? JSON.parse(adminString) : null;
+  const { isWorker, isAdmin } = JSON.parse(localStorage.getItem('users'))
 
 
   const upLg = useResponsive('up', 'lg');
@@ -66,9 +67,17 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
-      {navConfig.map((item) => (
-        <NavItem key={item.title} item={item} />
-      ))}
+      {navConfig.map((item) => {
+        if (isWorker && item.title == 'Tickets') {
+          return <NavItem key={'Tickets'} item={item} />
+        }
+        if (isAdmin) {
+          return <NavItem key={item.title} item={item} />
+        }
+
+        return null
+        
+      })}
     </Stack>
   );
 

@@ -2,6 +2,7 @@ import React , {useState} from 'react';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
 import { createNewsLater } from '../api/newsLater';
+import { toast } from 'react-toastify';
 
 const NewsletterSectionStyled = styled.section`
 background-color: #EDEDED;
@@ -112,13 +113,13 @@ function NewsletterSignup() {
         // const token = localStorage.getItem('token'); // Remplacez par la méthode d'obtention du token
         createNewsLater({ email: email })
             .then(response => {
-                // Gérer la réponse réussie
-                console.log('Inscription réussie', response);
                 setEmail('');
+                toast.success("Subscription réussie.");
             })
             .catch(error => {
                 // Gérer les erreurs
                 console.error('Erreur lors de l\'inscription', error);
+                toast.error('Email Invalid');
             });
     };
 

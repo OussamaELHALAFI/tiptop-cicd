@@ -54,11 +54,10 @@ export default function LoginView() {
       if (res.ok) {
           const token = await res.text();
           const decoded = jwt_decode(token);
-          console.log(decoded)
           accountService.saveToken(token);
           await setToken(token);
           handleAuthChange(true);
-          if (decoded && decoded.isAdmin) {
+          if (decoded && (decoded.isAdmin || decoded.isWorker) ) {
             router.push('/admin');
           } else {
             router.push('/admin/login');
