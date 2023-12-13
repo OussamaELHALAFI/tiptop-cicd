@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { logUser, createUser } from '../../api/auth';
 import { accountService } from '../../services/account.service';
 import { useAuth } from '../../services/authContex';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Button from '@mui/material/Button';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -124,7 +124,7 @@ const CheckboxContainer = styled.div`
   align-items: flex-start;
 `;
 
-const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
+const CheckboxInput = styled.input`
   margin-bottom: 4px; // Ajustez l'espacement au besoin
 `;
 
@@ -317,6 +317,7 @@ const SignupLogin = () => {
                     <CheckboxContainer>
                         <Label>
                             <CheckboxInput
+                                 type="checkbox"
                                 checked={signupForm.termsAccepted}
                                 onChange={handleCheckboxChange}
                             />

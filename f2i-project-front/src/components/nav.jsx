@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { AppBar, Toolbar, Button, Typography, IconButton, Menu, MenuItem, InputBase, Paper, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';

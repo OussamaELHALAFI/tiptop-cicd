@@ -1,5 +1,5 @@
 import React , {useState} from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { TextField, Button } from '@mui/material';
 import { createNewsLater } from '../api/newsLater';
 import { toast } from 'react-toastify';
