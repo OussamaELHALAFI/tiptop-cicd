@@ -29,7 +29,7 @@ import ProtecteAdmindRoute from './ProtectedAdminRoute.jsx';
 export const IndexPage = lazy(() => import('./Pages/appAdmin.jsx'));
 export const BlogPage = lazy(() => import('./Pages/blogAdmin'));
 export const UserPage = lazy(() => import('./Pages/userAdmin'));
-export const JeuxPage = lazy(() => import('./pages/jeux'));
+export const JeuxPage = lazy(() => import('./Pages/jeux'));
 export const CreateJeux = lazy(() => import('./Pages/createJeux'));
 export const CreatePage = lazy(() => import('./Pages/createUser'));
 export const TicketPage = lazy(() => import('./Pages/ticket'));
