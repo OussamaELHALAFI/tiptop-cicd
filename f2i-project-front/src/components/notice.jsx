@@ -7,7 +7,7 @@ function Testimonials() {
     const testimonialData = [
         {
             id: 1,
-            name: "Eric",
+            name: "Essaid",
             img: "", 
             review: "Je suis ravi d'avoir découvert The Tip Top, leurs thés biologiques sont d'une qualité exceptionnelle et l'engagement envers l'environnement est réel. Une entreprise à soutenir !",
             rating: 5,

@@ -112,7 +112,6 @@ export default function UserPage() {
     setPage(0);
     setFilterName(event.target.value);
   };
-
   const dataFiltered = applyFilter({
     inputData: userData,
     comparator: getComparator(order, orderBy),
@@ -184,7 +183,7 @@ export default function UserPage() {
 
                 <TableEmptyRows
                   height={77}
-                  emptyRows={emptyRows(page, rowsPerPage, users.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, userData.length)}
                 />
 
                 {notFound && <TableNoData query={filterName} />}
