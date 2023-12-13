@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Switch from '@mui/material/Switch';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import Switch from "@mui/material/Switch";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+
 // eslint-disable-next-line import/no-extraneous-dependencies
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { createUser } from '../../../api/auth';
-import { toast } from 'react-toastify';
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { createUser } from "../../../api/auth";
+import { toast } from "react-toastify";
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    motDePasse: '',
-    country: '',
-    state: '',
-    city: '',
-    address: '',
-    zipCode: '',
-    company: '',
-    role: '',
+    name: "",
+    email: "",
+    motDePasse: "",
+    Administrateur: "",
+    Employer: "",
   });
 
   const handleChange = (event) => {
@@ -46,32 +47,28 @@ const CreateUser = () => {
       password: userData.motDePasse, // Assurez-vous d'avoir un champ pour le mot de passe
       // ... autres champs
       image: null,
-      isAdmin: true
+      isAdmin: userData.Administrateur, //
+      isWorker: userData.Employer,
     };
 
     try {
       const response = await createUser(user);
       if (response.ok) {
-        toast.success('User created successfully');
-        setUserData({ name: '',
-        email: '',
-        motDePasse: '',
-        country: '',
-        state: '',
-        city: '',
-        address: '',
-        zipCode: '',
-        company: '',
-        role: '',})
-
+        toast.success("User created successfully");
+        setUserData({
+          name: "",
+          email: "",
+          motDePasse: "",
+          Administrateur: "",
+          Employer: "",
+        });
       } else {
-        console.error('Failed to create user');
-        toast.error('Failed to create user')
+        console.error("Failed to create user");
+        toast.error("Failed to create user");
       }
     } catch (error) {
-      console.error('Error during user creation', error);
+      console.error("Error during user creation", error);
     }
-
   };
 
   const [image, setImage] = useState(null);
@@ -99,9 +96,11 @@ const CreateUser = () => {
         <Stack className="css-u4p24i">
           <Box className="css-i9gxme">
             <Typography variant="h4" gutterBottom className="css-1bhrkuh">
-              Create a new user
+              Créer un nouvel utilisateur
             </Typography>
-            <Breadcrumbs className="css-qz81im">{/* Breadcrumbs here */}</Breadcrumbs>
+            <Breadcrumbs className="css-qz81im">
+              {/* Breadcrumbs here */}
+            </Breadcrumbs>
           </Box>
         </Stack>
       </Box>
@@ -115,32 +114,43 @@ const CreateUser = () => {
                 elevation={0}
                 sx={{
                   p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <input
                   accept="image/*"
                   id="icon-button-file"
                   type="file"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   onChange={handleImageChange}
                 />
                 <Button component="label">
                   <input type="file" hidden onChange={handleImageUpload} />
-                  <IconButton color="primary" aria-label="upload picture" component="span">
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="span"
+                  >
                     <PhotoCamera fontSize="large" />
                   </IconButton>
                 </Button>
-                {image && <Avatar src={image} sx={{ width: 90, height: 90, mb: 2 }} />}
+                {image && (
+                  <Avatar src={image} sx={{ width: 90, height: 90, mb: 2 }} />
+                )}
                 <Typography variant="caption" display="block" gutterBottom>
                   Allowed *.jpeg, *.jpg, *.png, *.gif max size of 3.1 MB
                 </Typography>
                 <FormControlLabel
-                  control={<Switch checked={isVerified} onChange={handleVerificationChange} />}
-                  label="Email Verified"
+                  control={
+                    <Switch
+                      checked={isVerified}
+                      onChange={handleVerificationChange}
+                    />
+                  }
+                  label="Email Verifier"
                   labelPlacement="start"
                   sx={{ mt: 2 }}
                 />
@@ -150,9 +160,12 @@ const CreateUser = () => {
           <Grid item xs={12} md={8}>
             <Paper sx={{ padding: 3 }}>
               <Grid container spacing={2}>
-                {/* Map through userData to create TextField for each entry */}
                 {Object.entries(userData).map(([key, value]) => {
-                  if (key !== 'isVerified') {
+                  if (
+                    key !== "isVerified" &&
+                    key !== "Administrateur" &&
+                    key !== "Employer"
+                  ) {
                     return (
                       <Grid item xs={12} sm={6} key={key}>
                         <TextField
@@ -161,9 +174,9 @@ const CreateUser = () => {
                             key.charAt(0).toUpperCase() +
                             key
                               .slice(1)
-                              .replace(/([A-Z])/g, ' $1')
+                              .replace(/([A-Z])/g, " $1")
                               .trim()
-                          } // Converts camelCase to regular form labels
+                          }
                           name={key}
                           value={value}
                           onChange={handleChange}
@@ -174,11 +187,43 @@ const CreateUser = () => {
                   }
                   return null;
                 })}
+
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id="admin-select-label">
+                      Administrateur
+                    </InputLabel>
+                    <Select
+                      labelId="admin-select-label"
+                      value={userData.Administrateur}
+                      onChange={handleChange}
+                      name="Administrateur"
+                    >
+                      <MenuItem value={false}>No</MenuItem>
+                      <MenuItem value={true}>Yes</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id="worker-select-label">Employer</InputLabel>
+                    <Select
+                      labelId="worker-select-label"
+                      value={userData.Employer}
+                      onChange={handleChange}
+                      name="Employer"
+                    >
+                      <MenuItem value={false}>No</MenuItem>
+                      <MenuItem value={true}>Yes</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
               </Grid>
               <br />
               <Grid item xs={12}>
                 <Button type="submit" variant="contained" color="inherit">
-                  Create User
+                  Créer un utilisateur
                 </Button>
               </Grid>
             </Paper>
