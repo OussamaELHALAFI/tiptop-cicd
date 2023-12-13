@@ -1,6 +1,7 @@
-import React from 'react';
+import React , {useState} from 'react';
 import styled from 'styled-components';
 import { TextField, Button } from '@mui/material';
+import { createNewsLater } from '../api/newsLater';
 
 const NewsletterSectionStyled = styled.section`
 background-color: #EDEDED;
@@ -103,6 +104,24 @@ p {
 `;
 
 function NewsletterSignup() {
+
+    const [email, setEmail] = useState('');
+
+    const handleSubscribe = () => {
+        // Ici, ajoutez la logique pour obtenir le token d'authentification si nécessaire
+        // const token = localStorage.getItem('token'); // Remplacez par la méthode d'obtention du token
+        createNewsLater({ email: email })
+            .then(response => {
+                // Gérer la réponse réussie
+                console.log('Inscription réussie', response);
+                setEmail('');
+            })
+            .catch(error => {
+                // Gérer les erreurs
+                console.error('Erreur lors de l\'inscription', error);
+            });
+    };
+
     return (
         <NewsletterSectionStyled>
             <h2>Restez à l’écoute !</h2>
@@ -112,8 +131,10 @@ function NewsletterSignup() {
                     variant="outlined" 
                     placeholder="Exemple@gmail.com" 
                     size="small"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                 />
-                <Button variant="contained">S'abonner</Button>
+                <Button variant="contained" onClick={handleSubscribe}>S'abonner</Button>
             </div>
         </NewsletterSectionStyled>
     );
