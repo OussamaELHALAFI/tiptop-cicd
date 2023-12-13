@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
 import { useAuth } from '../services/authContex';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo1.png';
 import { toast } from 'react-toastify';
 
 const StyledAppBar = styled(AppBar)`
