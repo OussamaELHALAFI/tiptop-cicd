@@ -35,7 +35,12 @@ pipeline {
                 }
             }
         }
+<<<<<<< HEAD
 	    */
+=======
+        */
+        
+>>>>>>> c482556aa574080a006ef53f4a45bb325122b8d6
 
 	
         stage('Push API Image to Docker Hub') {

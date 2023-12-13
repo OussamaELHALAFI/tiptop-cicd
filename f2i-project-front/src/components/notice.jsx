@@ -7,30 +7,30 @@ function Testimonials() {
     const testimonialData = [
         {
             id: 1,
-            name: "Eric",
+            name: "Essaid",
             img: "", 
             review: "Je suis ravi d'avoir découvert The Tip Top, leurs thés biologiques sont d'une qualité exceptionnelle et l'engagement envers l'environnement est réel. Une entreprise à soutenir !",
             rating: 5,
         },
         {
             id: 2,
-            name: "Eric",
+            name: "Oussama",
             img: "", 
-            review: "Je suis ravi d'avoir découvert The Tip Top, leurs thés biologiques sont d'une qualité exceptionnelle et l'engagement envers l'environnement est réel. Une entreprise à soutenir !",
+            review: "Thétiptop a conquis mon cœur avec sa gamme diversifiée de thés haut de gamme. Chaque infusion est une escapade sensorielle, offrant une qualité exceptionnelle qui élève véritablement ma pause thé quotidienne.",
             rating: 5,
         },
         {
             id: 3,
-            name: "Eric",
+            name: "Arezki",
             img: "", 
-            review: "Je suis ravi d'avoir découvert The Tip Top, leurs thés biologiques sont d'une qualité exceptionnelle et l'engagement envers l'environnement est réel. Une entreprise à soutenir !",
+            review: "La découverte de Thétiptop a été une révélation pour mes papilles. Leurs thés, savamment mélangés, offrent une expérience gustative inégalée. Un pur délice qui a transformé ma façon de savourer le thé.",
             rating: 5,
         },
         {
-            id: 3,
-            name: "Eric",
+            id: 4,
+            name: "Ibrahim",
             img: "", 
-            review: "Je suis ravi d'avoir découvert The Tip Top, leurs thés biologiques sont d'une qualité exceptionnelle et l'engagement envers l'environnement est réel. Une entreprise à soutenir !",
+            review: "Thétiptop incarne l'excellence du thé. J'ai été séduit par la fraîcheur et l'authenticité de leurs mélanges. Chaque tasse est une invitation à un voyage gustatif raffiné que je recommande vivement.",
             rating: 5,
         }
     ];

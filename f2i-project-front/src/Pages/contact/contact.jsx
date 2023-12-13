@@ -1,21 +1,49 @@
-import React from "react";
-import CounterHeure from "../../components/counterHeure/CounterHeure";
+import React , {useState} from "react";
 import FAQItem from "../../components/Faq/FAQItem";
 import Button from "../../components/button";
 import Newsletter from "../../components/news";
 import Countdown from "../../components/down";
 import AcademicWarning from '../../components/academicWarning';
+import { createNewsLater  } from '../../api/contact';
+
 
 function Contact() {
+
+  const [contact, setContact] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+});
+
+const handleSubmit = (e) => {
+  e.preventDefault(); // Empêcher le rechargement de la page
+  createNewsLater(contact)
+      .then(response => {
+          // Traiter la réponse ici
+          console.log('Message envoyé', response);
+      })
+      .catch(error => {
+          // Traiter l'erreur ici
+          console.error('Erreur lors de l\'envoi', error);
+      });
+  // Réinitialiser le formulaire après l'envoi
+  setContact({ name: '', email: '', subject: '', message: '' });
+};
+
+const handleChange = (e) => {
+  setContact({ ...contact, [e.target.id]: e.target.value });
+};
+
   const faqData = [
     {
-      question: "How can I contact support?",
+      question: "Comment puis-je contacter le support ?",
       answer:
-        "You can contact us through our contact form or by emailing support@example.com.",
+      "Vous pouvez nous contacter via notre formulaire de contact ou en envoyant un email à support@tiptop.com.",
     },
     {
-      question: "Where is your company located?",
-      answer: "Our company is located at 123 Main Street, Hometown, ABC.",
+      question: "Où se situe votre entreprise ?",
+      answer: "Notre entreprise est située au 18 rue Léon Frot, 75011 Paris.",
     },
   ];
 
@@ -48,7 +76,7 @@ function Contact() {
           <h2 className="text-2xl font-semibold mb-4 text-gray-800">
             Nous contacter
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -61,6 +89,8 @@ function Contact() {
                 id="name"
                 className="mt-1 p-2 w-full border rounded-md"
                 placeholder="Votre nom"
+                value={contact.name}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-4">
@@ -75,6 +105,8 @@ function Contact() {
                 id="email"
                 className="mt-1 p-2 w-full border rounded-md"
                 placeholder="Votre adresse email"
+                value={contact.email}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-4">
@@ -89,6 +121,8 @@ function Contact() {
                 id="subject"
                 className="mt-1 p-2 w-full border rounded-md"
                 placeholder="L'objet de votre message"
+                value={contact.subject}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-6">
@@ -103,6 +137,8 @@ function Contact() {
                 rows="4"
                 className="mt-1 p-2 w-full border rounded-md"
                 placeholder="Votre message ici"
+                value={contact.message}
+                onChange={handleChange}
               ></textarea>
             </div>
             <button
@@ -118,7 +154,7 @@ function Contact() {
       <Button />
       <div >
         <h2 className="text-2xl font-semibold mb-4">
-          Frequently Asked Questions
+        Questions Fréquemment Posées
         </h2>
         <div className="container mx-auto my-10 p-6 bg-gray-100 rounded-lg shadow-lg text-gray-800">
           {faqData.map((faq, index) => (

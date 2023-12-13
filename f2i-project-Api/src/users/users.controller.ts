@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -31,12 +32,14 @@ import { OAuth2Client } from 'google-auth-library';
 import { GoogleLogginDto } from './dto/google-login.dto';
 import { RolesGuard } from './guards/RolesGuard';
 import { Roles } from './decorators/roles.decorator';
+import { AuthGuard } from '@nestjs/passport';
+import { FacebookLoginDto } from './dto/facebook-login.dto';
 
 //const to get the info of the google auth
-const client = new OAuth2Client(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-);
+// const client = new OAuth2Client(
+//   process.env.GOOGLE_CLIENT_ID,
+//   process.env.GOOGLE_CLIENT_SECRET,
+// );
 
 @Controller('users')
 @ApiBearerAuth()
@@ -64,21 +67,42 @@ export class UsersController {
     return this.authService.login(logginDto);
   }
 
-  @ApiTags('auth')
+  @Get('facebook')
+  @UseGuards(AuthGuard('facebook'))
+  async facebookAuth(@Req() req) {}
+
+  //@ApiTags('auth')
+  @ApiCreatedResponse({ type: FacebookLoginDto })
+  @ApiBadRequestResponse()
+  @UseGuards(AuthGuard('facebook'))
+  @Get('facebook/login/callback')
+  async facebookLoggin(@Req() req) {
+    const { email, username, picture } = req.user;
+
+    const data = await this.authService.facebookLogin({
+      email: email,
+      username: username,
+      image: picture,
+    });
+    return data;
+  }
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {}
+
+  //@ApiTags('auth')
   @ApiCreatedResponse({ type: GoogleLogginDto })
   @ApiBadRequestResponse()
-  @Post('/google/login')
-  async googleLoggin(@Body('token') token) {
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
+  @UseGuards(AuthGuard('google'))
+  @Get('google/login/callback')
+  async googleLoggin(@Req() req) {
+    const { email, username, picture } = req.user;
 
-    const payload = ticket.getPayload();
     const data = await this.authService.googleLogin({
-      email: payload.email,
-      username: payload.name,
-      image: payload.picture,
+      email: email,
+      username: username,
+      image: picture,
     });
     return data;
   }

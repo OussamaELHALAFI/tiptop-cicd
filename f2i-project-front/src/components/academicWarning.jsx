@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const WarningContainer = styled.div`
   background-color: #ffffe0; // Couleur jaune pâle pour le fond de l'avertissement

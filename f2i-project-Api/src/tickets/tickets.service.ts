@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Ticket } from './entities/ticket.entity';
-import { In, MoreThan, Repository } from 'typeorm';
+import { In, MoreThan, Repository, EntityManager } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Jeux } from 'src/jeux/entities/jeux.entity';
 import { Produit } from 'src/produits/entities/produit.entity';
@@ -18,6 +18,7 @@ import { Gain } from 'src/gain/entities/gain.entity';
 @Injectable()
 export class TicketsService {
   constructor(
+    @InjectEntityManager() private readonly entityManager: EntityManager,
     @InjectRepository(Ticket) private ticketRepository: Repository<Ticket>,
     @InjectRepository(Jeux) private jeuxRepository: Repository<Jeux>,
     @InjectRepository(Produit) private produitRepository: Repository<Produit>,
@@ -205,8 +206,15 @@ export class TicketsService {
   async findParticipant(username?: string, ticketNumber?: string) {
     const query = this.ticketRepository
       .createQueryBuilder('ticket')
-      .leftJoinAndSelect('ticket.user', 'user')
-      .select(['ticket.numTicket', 'ticket.etat', 'user.username', 'user.id']);
+      .leftJoin('ticket.user', 'user')
+      .select([
+        'ticket.id',
+        'ticket.numTicket',
+        'ticket.etat',
+        'user.username',
+        'user.email',
+        'user.id',
+      ]);
 
     if (username) {
       query.andWhere('user.username LIKE :username', {
@@ -223,10 +231,12 @@ export class TicketsService {
     const tickets = await query.getMany();
 
     return tickets.map((ticket) => ({
-      userId: ticket.user.id,
-      username: ticket.user.username,
+      userId: ticket.user ? ticket.user.id : null,
+      username: ticket.user ? ticket.user.username : null,
+      userEmail: ticket.user ? ticket.user.email : null,
       ticketNumber: ticket.numTicket,
-      status: ticket.etat ? 'Active' : 'Inactive',
+      ticketId: ticket.id,
+      status: ticket.etat ? 'participer' : 'NonParticiper',
     }));
   }
 
@@ -289,5 +299,16 @@ export class TicketsService {
     ticket.user = user;
     ticket.participer = true;
     return this.ticketRepository.save(ticket);
+  }
+
+  async update(id: number, updateTicketDto: UpdateTicketDto, user: User) {
+    const updatedTicket = await this.findOne(id, user);
+
+    if (!updatedTicket) {
+      throw new NotFoundException(`Ticket with ID #${id} not found`);
+    }
+
+    Object.assign(updatedTicket, updateTicketDto);
+    return this.ticketRepository.save(updatedTicket);
   }
 }

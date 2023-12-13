@@ -9,7 +9,11 @@ import { IsAdminPipe } from './users/pipe/is-admin.pipe';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
+<<<<<<< HEAD
   origin: 'https://dsp-archiwebo22b-ah-em-ii-oe.dspthetiptop.fr',
+=======
+    origin: 'http://localhost:5173',
+>>>>>>> c482556aa574080a006ef53f4a45bb325122b8d6
     credentials: true,
     methods: ['GET', 'POST', 'PUT','PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -17,6 +21,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
    //app.useGlobalPipes(new IsAdminPipe());
   dotenv.config();
+<<<<<<< HEAD
     app.use((req, res, next) => {
       if (req.path === '/api') {
         return basicAuth({
@@ -28,6 +33,19 @@ async function bootstrap() {
       }
       next();
     });
+=======
+  app.use((req, res, next) => {
+    if (req.path === '/api') {
+      return basicAuth({
+        challenge: true,
+        users: {
+          [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD,
+        },
+      })(req, res, next);
+    }
+    next();
+  });
+>>>>>>> c482556aa574080a006ef53f4a45bb325122b8d6
   const config = new DocumentBuilder()
     .setTitle('TipTop Api')
     .setDescription('The TipTop API description')

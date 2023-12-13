@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import facebookIcon from '../assets/facebook.png'; 
 import instagramIcon from '../assets/instagram.png'; 
@@ -99,16 +99,16 @@ const FooterComponent = () => (
     <FooterBottom>
       <CopyrightText>© 2023 Thé Tip Top. Powered by Thé Tip Top</CopyrightText>
       <SocialMediaIcons>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/thetiptoptea/" target="_blank" rel="noopener noreferrer">
           <SocialIcon src={instagramIcon} alt="ThéTipTop Instagram" />
         </a>
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.facebook.com/profile.php?id=61554462031771" target="_blank" rel="noopener noreferrer">
           <SocialIcon src={facebookIcon} alt="ThéTipTop Facebook" />
         </a>
         <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
           <SocialIcon src={linkedInIcon} alt="ThéTipTop LinkedIn" />
         </a>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://twitter.com/thethetiptop" target="_blank" rel="noopener noreferrer">
           <SocialIcon src={twitterIcon} alt="ThéTipTop Twitter" />
         </a>
       </SocialMediaIcons>
