@@ -10,8 +10,8 @@ import { User } from 'src/users/entities/user.entity';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { Jeux } from './entities/jeux.entity';
 import { EntityManager, LessThan, Repository } from 'typeorm';
-import { JeuxDetails } from 'src/jeux-details/entities/jeux-details.entity';
-import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { JeuxDetails } from '../jeux-details/entities/jeux-details.entity';
+import { Ticket } from '../tickets/entities/ticket.entity';
 
 @Injectable()
 export class JeuxService {

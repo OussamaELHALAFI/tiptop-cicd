@@ -1,4 +1,4 @@
-import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity';
 import {
   Column,
   Entity,

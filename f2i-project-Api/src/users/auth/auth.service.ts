@@ -78,8 +78,13 @@ export class AuthService {
 
       return this.userService.create(user);
     } else {
-      // faut creer un token jwt
-      throw new NotFoundException('User not found');
+      const { id, isAdmin, isWorker } = userExists;
+      const jwtPayload = { id, isAdmin, isWorker };
+      const jwtToken = await this.jwt.signAsync(jwtPayload, {
+        expiresIn: '1d',
+        algorithm: 'HS512',
+      });
+      return jwtToken;
     }
   }
 
@@ -95,8 +100,13 @@ export class AuthService {
 
       return this.userService.create(user);
     } else {
-      // faut creer un token jwt
-      throw new NotFoundException('User not found');
+      const { id, isAdmin, isWorker } = userExists;
+      const jwtPayload = { id, isAdmin, isWorker };
+      const jwtToken = await this.jwt.signAsync(jwtPayload, {
+        expiresIn: '1d',
+        algorithm: 'HS512',
+      });
+      return jwtToken;
     }
   }
 }

@@ -68,24 +68,10 @@ export class TicketsController {
     return this.ticketsService.getUserTicketsHistory(user);
   }
 
-  @Get(':findnumticket')
-  @ApiBearerAuth('jwt')
-  @ApiOkResponse({ type: Ticket, description: 'Get a Ticket with its number' })
-  findByNum(@Param('findnumticket') findnumticket: string) {
-    return this.ticketsService.findByNum(findnumticket);
-  }
-
-  @Get()
-  @ApiBearerAuth('jwt')
-  @ApiOkResponse({ type: Ticket, isArray: true })
-  findAll(@CurrentUser() user: User) {
-    return this.ticketsService.findAll(user);
-  }
-
   @Get('findParticipant')
   @ApiBearerAuth('jwt')
   @UseGuards(RolesGuard)
-  @Roles('worker')
+  @Roles('admin', 'worker')
   @ApiOkResponse({
     type: Ticket,
     description: 'Search for participants by username or ticket number',
@@ -107,6 +93,20 @@ export class TicketsController {
     @Query('ticketNumber') ticketNumber?: string,
   ) {
     return this.ticketsService.findParticipant(username, ticketNumber);
+  }
+
+  @Get(':findnumticket')
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({ type: Ticket, description: 'Get a Ticket with its number' })
+  findByNum(@Param('findnumticket') findnumticket: string) {
+    return this.ticketsService.findByNum(findnumticket);
+  }
+
+  @Get()
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({ type: Ticket, isArray: true })
+  findAll(@CurrentUser() user: User) {
+    return this.ticketsService.findAll(user);
   }
 
   @Get(':numticket')

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { AppBar, Toolbar, Button, Typography, IconButton, Menu, MenuItem, InputBase, Paper, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { accountService } from '../services/account.service';
 import { useAuth } from '../services/authContex';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo1.png';
 import { toast } from 'react-toastify';
 
 const StyledAppBar = styled(AppBar)`
@@ -155,11 +155,23 @@ function Navbar() {
             </MenuButton>
           ) : (
             <div className="nav-container">
-              <StyledButton color="inherit"><NavLink to="/home" className="nav-link" activeClassName="active">Accueil</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/about" className="nav-link" activeClassName="active">L'entreprise</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/blog" className="nav-link" activeClassName="active">Blog</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/participer" className="nav-link" activeClassName="active">Participer</NavLink></StyledButton>
-              <StyledButton color="inherit"><NavLink to="/contact" className="nav-link" activeClassName="active"> Contact </NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink
+                to="/home"
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Accueil</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink
+                to="/about"
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >L'entreprise</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink to="/blog" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Blog</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink to="/participer" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              >Participer</NavLink></StyledButton>
+              <StyledButton color="inherit"><NavLink to="/contact" 
+              className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+              > Contact </NavLink></StyledButton>
               {isAuthenticated ? (
                 <>
                   <StyledButton color="inherit">
@@ -172,7 +184,9 @@ function Navbar() {
                   </StyledButton>
                 </>
               ) : (
-                <StyledButton color="inherit"><NavLink to="/signup" className="nav-link" activeClassName="active"> Connexion </NavLink></StyledButton>
+                <StyledButton color="inherit"><NavLink to="/signup" 
+                className={({ isActive }) => isActive ? 'active nav-link' : 'nav-link'}
+                > Connexion </NavLink></StyledButton>
               )}
             </div>
           )}

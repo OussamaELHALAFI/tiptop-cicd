@@ -16,22 +16,21 @@ export const AuthProvider = ({ children }) => {
   const handleAuthChange = (authStatus) => {
     setIsAuthenticated(authStatus);
   };
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
   const setToken = async (token) => {
     // Décodez le token et stockez-le
     const decoded = jwt_decode(token);
     setDecodedToken(decoded);
     try {
+      if (decoded){
+        const users = JSON.stringify(decoded)
+        localStorage.setItem('users',users)
+        
+      }
       const user = await getUser(decoded.id); 
       if (user) {
         setUserData(user);
       const userJson = JSON.stringify(user);
-        localStorage.setItem('user', userJson )
+        localStorage.setItem('user', userJson)
 
       }
     } catch (error) {

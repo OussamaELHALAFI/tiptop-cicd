@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import thé from '../assets/grainDeThé.png';
 
 const Container = styled.div`

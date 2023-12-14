@@ -30,15 +30,23 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
 
     const { name, emails, photos } = profile;
     console.log(profile);
-    // Check if name parts are defined
+
     const givenName = name?.givenName || '';
     const familyName = name?.familyName || '';
 
+    let username = '';
+    if (givenName && familyName) {
+      username = `${givenName} ${familyName}`;
+    } else if (givenName || familyName) {
+      username = givenName || familyName;
+    }
+
     const user = {
-      email: emails[0].value,
-      username: givenName + ' ' + familyName,
-      picture: photos[0].value,
+      email: emails?.[0]?.value || '',
+      username: username,
+      picture: photos?.[0]?.value || '',
     };
+
     done(null, user);
   }
 }

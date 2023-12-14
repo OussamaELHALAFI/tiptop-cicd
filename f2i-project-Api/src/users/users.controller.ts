@@ -77,11 +77,11 @@ export class UsersController {
   @UseGuards(AuthGuard('facebook'))
   @Get('facebook/login/callback')
   async facebookLoggin(@Req() req) {
-    const { email, givenName, familyName, picture } = req.user;
+    const { email, username, picture } = req.user;
 
     const data = await this.authService.facebookLogin({
       email: email,
-      username: givenName + '' + familyName,
+      username: username,
       image: picture,
     });
     return data;
@@ -97,11 +97,11 @@ export class UsersController {
   @UseGuards(AuthGuard('google'))
   @Get('google/login/callback')
   async googleLoggin(@Req() req) {
-    const { email, givenName, familyName, picture } = req.user;
+    const { email, username, picture } = req.user;
 
     const data = await this.authService.googleLogin({
       email: email,
-      username: givenName + '' + familyName,
+      username: username,
       image: picture,
     });
     return data;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { getWin, claimWin  } from '../api/participer';
 import { toast } from 'react-toastify';
 

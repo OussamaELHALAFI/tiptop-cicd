@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Blog } from 'src/blogs/entities/blog.entity';
-import { Jeux } from 'src/jeux/entities/jeux.entity';
-import { Produit } from 'src/produits/entities/produit.entity';
-import { Ticket } from 'src/tickets/entities/ticket.entity';
+import { Blog } from '../../blogs/entities/blog.entity';
+import { Jeux } from '../../jeux/entities/jeux.entity';
+import { Produit } from '../../produits/entities/produit.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity';
 import {
   Column,
   Entity,
