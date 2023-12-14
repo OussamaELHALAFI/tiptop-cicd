@@ -5,7 +5,7 @@ import facebookIcon from '../assets/facebook.png';
 import instagramIcon from '../assets/instagram.png'; 
 import linkedInIcon from '../assets/linkedin.png'; 
 import twitterIcon from '../assets/twitter.png'; 
-import logo from '../assets/logo.png'
+import logo from '../assets/logo1.png'
 
 
 const FooterContainer = styled.footer`
