@@ -56,11 +56,7 @@ export default function UserTableRow({
 
         <TableCell>{role}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
-
-        <TableCell>
-          <Label color={(status === 'NotPacticiped' && 'error') || 'success'}>{status}</Label>
-        </TableCell>
+        <TableCell align="center">{isVerified}</TableCell>
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

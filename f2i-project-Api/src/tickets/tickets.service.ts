@@ -211,6 +211,7 @@ export class TicketsService {
         'ticket.id',
         'ticket.numTicket',
         'ticket.etat',
+        'ticket.participer',
         'user.username',
         'user.email',
         'user.id',
@@ -237,6 +238,7 @@ export class TicketsService {
       ticketNumber: ticket.numTicket,
       ticketId: ticket.id,
       status: ticket.etat ? 'participer' : 'NonParticiper',
+      particper: ticket.participer ? 'participer' : 'NonParticiper',
     }));
   }
 

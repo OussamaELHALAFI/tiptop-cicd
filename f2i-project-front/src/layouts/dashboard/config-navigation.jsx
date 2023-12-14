@@ -27,16 +27,16 @@ const navConfig = [
     path: '/admin/ticket',
     icon: icon('ic_ticket1'),
   },
-  {
-    title: 'produit',
-    path: '/admin/products',
-    icon: icon('ic_cart'),
-  },
-  {
-    title: 'blog',
-    path: '/admin/blog',
-    icon: icon('ic_blog'),
-  },
+  // {
+  //   title: 'produit',
+  //   path: '/admin/products',
+  //   icon: icon('ic_cart'),
+  // },
+  // {
+  //   title: 'blog',
+  //   path: '/admin/blog',
+  //   icon: icon('ic_blog'),
+  // },
   // {
   //   title: 'login',
   //   path: '/login',
