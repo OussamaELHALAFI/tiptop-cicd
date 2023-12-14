@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 
-import { users } from "../../../_mock/ticket";
 
 import Iconify from "../../../components/iconify";
 import Scrollbar from "../../../components/scrollbar";
@@ -116,6 +115,7 @@ export default function TicketPage() {
   const handleClickCreatePage = () => {
     navigate("/admin/ticket/create");
   };
+  console.log(ticketData)
 
   const notFound = !dataFiltered.length && !!filterName;
 
@@ -160,8 +160,7 @@ export default function TicketPage() {
                   { id: "name", label: "Nom" },
                   { id: "company", label: "Email" },
                   { id: "role", label: "Ticket" },
-                  { id: "isVerified", label: "Recuperer", align: "center" },
-                  { id: "status", label: "Status" },
+                  { id: "isVerified", label: "Status", align: "center" },
                   { id: "" },
                 ]}
               />
@@ -176,7 +175,7 @@ export default function TicketPage() {
                       status={row.status}
                       company={row.userEmail}
                       avatarUrl={row.avatarUrl}
-                      isVerified={row.paticiper}
+                      isVerified={row.particper}
                       selected={selected.indexOf(row.name) !== -1}
                       handleClick={(event) => handleClick(event, row.name)}
                     />
