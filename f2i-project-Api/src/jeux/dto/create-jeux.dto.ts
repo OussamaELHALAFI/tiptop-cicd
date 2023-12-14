@@ -25,9 +25,13 @@ export class CreateJeuxDto {
   @Expose()
   description: string;
 
+  @IsString()
+  @Expose()
+  grandLots: string;
+
   @ValidateNested({ each: true })
   @Type(() => CreateJeuxDetailsDto)
-  @ArrayMinSize(1) // Ensure there's at least one JeuxDetails
+  @ArrayMinSize(1)
   @Expose()
   jeuxDetails: CreateJeuxDetailsDto[];
 }

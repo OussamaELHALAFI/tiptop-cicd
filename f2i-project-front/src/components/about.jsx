@@ -10,10 +10,15 @@ padding: 50px 0;
 margin-top: -30px;
 
 h2 {
-    font-size: 32px;
     margin-bottom: 20px;
-    color: #4A4A4A;
+    color: #000000;
     text-align: center;
+    font-weight: 600;
+    font-size: 40px;
+    font-family: 'Quicksand', sans-serif;
+    @media (max-width: 480px) { // Pour les téléphones
+        font-size: 25px;
+    }
 }
 `;
 
@@ -23,6 +28,14 @@ const AboutSection = styled.div`
     width: 80%;  
     align-items: center;
     justify-content: space-between; 
+    @media (max-width: 768px) { // Pour les tablettes
+        flex-direction: column;
+        text-align: center;
+    }
+
+    @media (max-width: 480px) { // Pour les téléphones
+        width: 95%;
+    }
 `;
 
 const TeaImage = styled.div`
@@ -30,6 +43,9 @@ const TeaImage = styled.div`
     img {
         width: 100%;
         object-fit: cover;
+    }
+    @media (max-width: 768px) { // Pour les tablettes
+        margin-bottom: 20px;
     }
 `;
 
@@ -40,9 +56,19 @@ const AboutText = styled.div`
     font-family: Arial, sans-serif;
 
     p {
-        font-size: 18px;
-        color: #4A4A4A;
+        color: #000000;
+        font-size: 30px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+    
+    @media (max-width: 768px) { // Pour les tablettes
+        font-size: 25px;
     }
+
+    @media (max-width: 480px) { // Pour les téléphones
+        font-size: 20px;
+    }
+}
 `;
 
 function AboutUs() {
@@ -51,7 +77,7 @@ function AboutUs() {
             <h2>Qui sommes nous ?</h2>
             <AboutSection>
                 <TeaImage>
-                    <img src={thé} alt="Tea" />
+                    <img src={thé} alt="Thé vert en vrac de qualité premium vendu par Thé TipTop" />
                 </TeaImage>
                 <AboutText>
                     <p>

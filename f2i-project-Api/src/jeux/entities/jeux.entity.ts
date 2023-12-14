@@ -35,6 +35,10 @@ export class Jeux {
   @ApiProperty()
   description: string;
 
+  @Column()
+  @ApiProperty()
+  grandLots: string;
+
   @ManyToOne(() => User, (user) => user.jeux)
   user: User;
 

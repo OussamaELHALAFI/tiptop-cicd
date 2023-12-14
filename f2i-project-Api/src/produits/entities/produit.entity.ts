@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Ticket } from 'src/tickets/entities/ticket.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -7,22 +8,32 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   ManyToMany,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity()
 export class Produit {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ApiProperty()
   @Column()
   nomDeProduit: string;
 
+  @ApiProperty()
+  @CreateDateColumn()
+  createdAt?: Date;
+
+  @ApiProperty()
   @Column()
   prix: number;
 
+  @ApiProperty()
   @Column()
   discription: string;
 
+  @ApiProperty()
   @Column()
   stock: number;
 

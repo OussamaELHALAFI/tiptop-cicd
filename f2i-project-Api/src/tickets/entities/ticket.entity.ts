@@ -25,11 +25,14 @@ export class Ticket {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   dateachat: Date;
 
-  @Column()
+  @Column({ nullable: true })
   montant: number;
 
   @Column({ default: false })
   etat: boolean;
+
+  @Column({ default: false })
+  participer: boolean;
 
   @ManyToOne(() => User, (user) => user.tickets)
   user: User;

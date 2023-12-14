@@ -10,6 +10,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
 import { GoogleLogginDto } from './../dto/google-login.dto';
+import { FacebookLoginDto } from '../dto/facebook-login.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,8 @@ export class AuthService {
   ) {}
 
   async register(createUserDto: CreateUserDto) {
-    const { username, email, password } = createUserDto;
+    const { username, email, password, isAdmin, isWorker, image } =
+      createUserDto;
     //console.log(createUserDto);
 
     const exists = await this.userService.findOneByEmail(email);
@@ -36,6 +38,9 @@ export class AuthService {
     user.username = username;
     user.password = hash;
     user.email = email;
+    user.isAdmin = isAdmin;
+    user.isWorker = isWorker;
+    user.image = image;
 
     return this.userService.create(user);
   }
@@ -47,10 +52,10 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('User ont found');
     }
-    const { id, isAdmin } = user;
+    const { id, isAdmin, isWorker } = user;
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
-      const jwtPayload = { id, isAdmin };
+      const jwtPayload = { id, isAdmin, isWorker };
       const jwtToken = await this.jwt.signAsync(jwtPayload, {
         expiresIn: '1d',
         algorithm: 'HS512',
@@ -69,10 +74,29 @@ export class AuthService {
       user.username = username;
       user.email = email;
       user.image = image;
+      user.password = 'password';
 
       return this.userService.create(user);
     } else {
-      throw new NotFoundException('User ont found');
+      // faut creer un token jwt
+      throw new NotFoundException('User not found');
+    }
+  }
+
+  async facebookLogin(facebookLogin: FacebookLoginDto) {
+    const { email, username, image } = facebookLogin;
+    const userExists = await this.userService.findOneByEmail(email);
+    if (!userExists) {
+      const user = new User();
+      user.username = username;
+      user.email = email;
+      user.image = image;
+      user.password = 'password';
+
+      return this.userService.create(user);
+    } else {
+      // faut creer un token jwt
+      throw new NotFoundException('User not found');
     }
   }
 }

@@ -13,28 +13,32 @@ export class RolesGuard implements CanActivate {
     ]);
 
     if (!requiredRoles) {
-      return true; // No roles specified, allow access
+      return true;
     }
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      return false; // No token, deny access
+      return false;
     }
 
     try {
       const payload = this.jwtService.verify(token, {
-        secret: 'iasojasjzdnncydbncsdqdq',
+        secret: process.env.SECRETKEY,
       });
 
-      const isAdmin: boolean = payload.isAdmin;
+      if (requiredRoles.includes('admin') && payload.isAdmin) {
+        return true;
+      }
 
-      const hasRequiredRole = isAdmin && requiredRoles.includes('admin');
+      if (requiredRoles.includes('worker') && payload.isWorker) {
+        return true;
+      }
 
-      return hasRequiredRole;
+      return requiredRoles.includes('user');
     } catch {
-      return false; // Invalid token, deny access
+      return false;
     }
   }
 

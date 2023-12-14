@@ -113,10 +113,8 @@ export class JeuxService {
   }
 
   async tirage(user: User): Promise<Ticket> {
-    // Get current date
     const currentDate = new Date();
 
-    // Find the expired jeuxDetails
     const expiredJeuxDetails = await this.jeuxDetailsRepository
       .createQueryBuilder('jeuxDetails')
       .leftJoin('jeuxDetails.jeux', 'jeux')
@@ -127,15 +125,11 @@ export class JeuxService {
       throw new NotFoundException('No expired jeuxDetails found.');
     }
 
-    // Find tickets with the selected jeuxDetails for the given user
     const tickets = await this.ticketRepository
       .createQueryBuilder('ticket')
-      .leftJoin('ticket.jeuxDetails', 'jeuxDetails')
-      .leftJoin('ticket.user', 'user')
-      .where('jeuxDetails IN (:...jeuxDetails)', {
+      .where('etat = true', {
         jeuxDetails: expiredJeuxDetails,
       })
-      .andWhere('user.id = :userId', { userId: user.id })
       .getMany();
 
     if (tickets.length === 0) {
@@ -144,7 +138,6 @@ export class JeuxService {
       );
     }
 
-    // Randomly select one ticket
     const selectedTicket = tickets[Math.floor(Math.random() * tickets.length)];
 
     return selectedTicket;

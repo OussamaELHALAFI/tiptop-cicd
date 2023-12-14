@@ -11,24 +11,34 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     super({
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/facebook/redirect',
+      callbackURL: 'http://localhost:3001/api/users/facebook/login/callback',
       scope: 'email',
-      profileFields: ['emails', 'name', 'image'],
+      profileFields: ['emails', 'name', 'picture.type(large)'],
     });
   }
 
-  async validate(accessToken: string, profile: Profile) {
-    const { name, emails } = profile;
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+    done: (err: any, user: any, info?: any) => void,
+  ) {
+    if (!profile) {
+      console.log('Profile is undefined');
+      return done(new Error('Profile is undefined'), null);
+    }
+
+    const { name, emails, photos } = profile;
+    console.log(profile);
+    // Check if name parts are defined
+    const givenName = name?.givenName || '';
+    const familyName = name?.familyName || '';
+
     const user = {
       email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
+      username: givenName + ' ' + familyName,
+      picture: photos[0].value,
     };
-    const payload = {
-      user,
-      accessToken,
-    };
-
-    //done(null, payload);
+    done(null, user);
   }
 }
