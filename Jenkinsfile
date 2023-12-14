@@ -46,7 +46,7 @@ pipeline {
             }
         }
 
-        stage('Push Frontend Image to Docker Hub') {
+        stage('Push Frontend Image to Docker  Hub ') {
             steps {
                 dir('f2i-project-front') {
                     sh 'docker push ousama4567/f2i-project-front:${BRANCH_NAME}'
@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Branch Based Deployments ') {
+        stage('Branch Based Deployments') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
