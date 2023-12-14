@@ -57,6 +57,10 @@ export default function UserTableRow({
         <TableCell>{role}</TableCell>
 
         <TableCell align="center">{isVerified}</TableCell>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c2e68cccf84ccc1669bbd2f9aa65013bce14b883
 
         <TableCell align="right">
           <IconButton onClick={handleOpenMenu}>

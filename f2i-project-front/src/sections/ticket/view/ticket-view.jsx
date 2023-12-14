@@ -114,6 +114,7 @@ export default function TicketPage() {
   const handleClickCreatePage = () => {
     navigate("/admin/ticket/create");
   };
+  console.log(ticketData)
 
   const notFound = !dataFiltered.length && !!filterName;
 
