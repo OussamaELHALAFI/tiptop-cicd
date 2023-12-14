@@ -8,7 +8,7 @@ services:
       POSTGRES_DB: tiptop_db
       POSTGRES_PASSWORD: root
     ports:
-      - "5432:5432"
+      - "5430:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 
