@@ -12,9 +12,5 @@ export class SerializeLogginDto extends PartialType(CreateUserDto) {
   @Expose()
   image?: string;
 
-  @Expose()
-  isAdmin?: Boolean;
 
-  @Expose()
-  isWorker?: Boolean;
 }
