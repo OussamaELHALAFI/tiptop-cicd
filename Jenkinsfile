@@ -53,7 +53,7 @@ pipeline {
             }
         }
 
-        stage('Branch Based Deployments') {
+        stage('Branch Based Deployments ') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'dev') {
