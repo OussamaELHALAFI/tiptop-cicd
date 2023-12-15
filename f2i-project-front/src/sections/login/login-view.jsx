@@ -24,6 +24,7 @@ import { accountService } from '../../services/account.service';
 import { useNavigate} from 'react-router-dom';
 import { useAuth } from '../../services/authContex';
 import jwt_decode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
@@ -58,12 +59,15 @@ export default function LoginView() {
           await setToken(token);
           handleAuthChange(true);
           if (decoded && (decoded.isAdmin || decoded.isWorker) ) {
+            toast.success("Connexion réussite");
             router.push('/admin');
           } else {
+            toast.error("Erreur de Connexion, Vous étes pas autorisé a connecter")
             router.push('/admin/login');
             localStorage.clear();
           }
       } else {
+        toast.error("Une Erreur est servenue verifier vos coordoner")
           
       }
   } catch (error) {
