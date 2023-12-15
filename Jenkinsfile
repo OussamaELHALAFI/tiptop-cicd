@@ -25,7 +25,7 @@ pipeline {
         }
 
         //uncomment below stage when you want to enable testing for API 
-	    /*
+	    /*fix
         stage('Run API Tests') {
             steps {
                 dir('f2i-project-Api') {
