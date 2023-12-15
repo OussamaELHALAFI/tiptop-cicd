@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { logUser, createUser } from '../../api/auth';
-import { accountService } from '../../services/account.service';
-import { useAuth } from '../../services/authContex';
-import styled from '@emotion/styled';
-import Button from '@mui/material/Button';
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import Tooltip from '@mui/material/Tooltip';
-import { toast } from 'react-toastify';
-import { getUser } from '../../api/authGoogle';
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { logUser, createUser } from "../../api/auth";
+import { accountService } from "../../services/account.service";
+import { useAuth } from "../../services/authContex";
+import styled from "styled-components";
+import Button from "@mui/material/Button";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import Tooltip from "@mui/material/Tooltip";
+import { toast } from "react-toastify";
 
 
 const PageContainer = styled.div`
@@ -123,7 +122,7 @@ const CheckboxContainer = styled.div`
   align-items: flex-start;
 `;
 
-const CheckboxInput = styled.input`
+const CheckboxInput = styled.input.attrs({ type: "checkbox" })`
   margin-bottom: 4px; // Ajustez l'espacement au besoin
 `;
 
@@ -156,9 +155,8 @@ const Title = styled.h3`
 `;
 
 const SignupLogin = () => {
-    const navigate = useNavigate();
-    const { setToken, handleAuthChange } = useAuth();
-    const [isGoogleAuthenticated, setIsGoogleAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  const { setToken, handleAuthChange } = useAuth();
 
   // États pour les formulaires d'inscription et de connexion
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
@@ -293,70 +291,108 @@ const SignupLogin = () => {
   };
 
  
-        const handleGoogleLogin = async () => {
-            if (isGoogleAuthenticated) {
-                try {
-                    const jwt = await getUser();
-                    setIsGoogleAuthenticated(false); // Réinitialiser après avoir récupéré le JWT
-                } catch (error) {
-                    console.error('Erreur lors de la récupération du JWT', error);
-                }
-            } else {
-                // Redirection pour le premier clic
-                window.location.href = 'http://localhost:3001/api/users/google';
-                navigate('/signup');
-
-                setIsGoogleAuthenticated(true); // Supposer que l'utilisateur s'est authentifié avec succès
-            }
-    };
+  const handleGoogleLogin = () => {
+    // Implementation of Google login logic
+  };
 
   const handleFacebookLogin = () => {
     // Implementation of Facebook login logic
   };
 
     return (
-        <PageContainer>
-            <FormContainer>
-                <Form onSubmit={handleSignupSubmit}>
-                    <Title>Inscription</Title>
-                    <Input type="text" placeholder="Nom D'utilisateur" name="username" value={signupForm.username} onChange={handleSignupChange} />
-                    <Input type="email" placeholder="Email" name="email" value={signupForm.email} onChange={handleSignupChange} />
-                    <Tooltip title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule et un caractère spécial @,#,=,+,&.......">
-                        <Input type="password" placeholder="Mot de passe" name="password" value={signupForm.password} onChange={handleSignupChange} />
-                    </Tooltip>
-                    <CheckboxContainer>
-                        <Label>
-                            <CheckboxInput
-                                 type="checkbox"
-                                checked={signupForm.termsAccepted}
-                                onChange={handleCheckboxChange}
-                            />
-                            <Text>J'accepte les</Text>
-                            <LinkText to="/conditionGénerale">Conditions Générales</LinkText>
-                        </Label>
-                        <Text>et la <LinkText to="/politiqueDeConfidentialité">politique de confidentialité</LinkText>.</Text>
-                    </CheckboxContainer>
-                    <ValidButton type="submit" disabled={isSubmitting}>{isSubmitting ? 'Inscription en cours...' : 'Créer un compte'}</ValidButton>
-                    <SocialButton startIcon={<GoogleIcon />} onClick={handleGoogleLogin} style={{ backgroundColor: '#4285F4', color: 'white' }}>
-                        <p>S'inscrire avec Google</p>
-                    </SocialButton>
-                    <SocialButton startIcon={<FacebookIcon />} onClick={() => {/* logique de connexion Facebook */ }} style={{ backgroundColor: '#1877F2', color: 'white' }}>
-                    <p> S'inscrire avec Facebook </p>
-                    </SocialButton>
-                </Form>
-                <VerticalLine />
-                <Form onSubmit={handleLoginSubmit}>
-                    <Title>Connexion</Title>
-                    <Input type="email" placeholder="Email" name="email" value={loginForm.email} onChange={handleLoginChange} />
-                    <Input type="password" placeholder="Mot de passe" name="password" value={loginForm.password} onChange={handleLoginChange} />
-                    {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-                    <ValidButton type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? 'Connexion en cours...' : 'Connexion'}
-                    </ValidButton>
-                </Form>
-            </FormContainer>
-        </PageContainer>
-    );
+      <PageContainer>
+      <FormContainer>
+        <Form onSubmit={handleSignupSubmit}>
+          <Title>Inscription</Title>
+          <Input
+            type="text"
+            placeholder="Nom D'utilisateur"
+            name="username"
+            value={signupForm.username}
+            onChange={handleSignupChange}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={signupForm.email}
+            onChange={handleSignupChange}
+          />
+          <Tooltip title="Le mot de passe doit contenir au moins 8 caractères, dont une majuscule et un caractère spécial @,#,=,+,&.......">
+            <Input
+              type="password"
+              placeholder="Mot de passe"
+              name="password"
+              value={signupForm.password}
+              onChange={handleSignupChange}
+            />
+          </Tooltip>
+          <CheckboxContainer>
+            <Label>
+              <CheckboxInput
+                checked={signupForm.termsAccepted}
+                onChange={handleCheckboxChange}
+              />
+              <Text>J'accepte les</Text>
+              <LinkText to="/conditionGénerale">Conditions Générales</LinkText>
+            </Label>
+            <Text>
+              et la{" "}
+              <LinkText to="/politiqueDeConfidentialité">
+                politique de confidentialité
+              </LinkText>
+              .
+            </Text>
+          </CheckboxContainer>
+          <ValidButton type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Inscription en cours..." : "Créer un compte"}
+          </ValidButton>
+          <SocialButton
+            startIcon={<GoogleIcon />}
+            onClick={() => {
+              /* logique de connexion Google */
+            }}
+            style={{ backgroundColor: "#4285F4", color: "white" }}
+          >
+            <p>S'inscrire avec Google</p>
+          </SocialButton>
+          <SocialButton
+            startIcon={<FacebookIcon />}
+            onClick={() => {
+              /* logique de connexion Facebook */
+            }}
+            style={{ backgroundColor: "#1877F2", color: "white" }}
+          >
+            <p> S'inscrire avec Facebook </p>
+          </SocialButton>
+        </Form>
+        <VerticalLine />
+        <Form onSubmit={handleLoginSubmit}>
+          <Title>Connexion</Title>
+          <Input
+            type="email"
+            placeholder="Email"
+            name="email"
+            value={loginForm.email}
+            onChange={handleLoginChange}
+          />
+          <Input
+            type="password"
+            placeholder="Mot de passe"
+            name="password"
+            value={loginForm.password}
+            onChange={handleLoginChange}
+          />
+          {error && (
+            <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+          )}
+          <ValidButton type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Connexion en cours..." : "Connexion"}
+          </ValidButton>
+        </Form>
+      </FormContainer>
+    </PageContainer>
+  );
 };
 
 export default SignupLogin;
