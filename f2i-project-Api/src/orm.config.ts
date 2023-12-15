@@ -12,3 +12,4 @@ export const config: TypeOrmModuleOptions = {
   //cache: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
 };
+
